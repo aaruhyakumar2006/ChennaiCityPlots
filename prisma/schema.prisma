@@ -1,0 +1,158 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum PropertyType {
+  RESIDENTIAL
+  COMMERCIAL
+}
+
+enum PropertyStatus {
+  READY_TO_MOVE
+  UNDER_CONSTRUCTION
+}
+
+enum LeadStatus {
+  NEW
+  CONTACTED
+  NEGOTIATION
+  CONVERTED
+  LOST
+}
+
+enum VisitStatus {
+  PENDING
+  APPROVED
+  COMPLETED
+  CANCELLED
+}
+
+model Admin {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String // bcrypt hash
+  name      String
+  createdAt DateTime @default(now())
+}
+
+model Property {
+  id         String         @id @default(cuid())
+  propertyId String         @unique // human-friendly code, e.g. PH-1001
+  name       String
+  slug       String         @unique
+  type       PropertyType
+  status     PropertyStatus
+
+  location  String
+  address   String?
+  latitude  Float?
+  longitude Float?
+
+  price          Int // in INR, smallest readable unit (rupees)
+  areaMin        Int?
+  areaMax        Int?
+  plotSizeSqft   Int?
+  facing         String?
+  dimensions     String?
+  approvalStatus String? // e.g. "DTCP & RERA Approved"
+  reraNumber     String?
+  availableUnits Int?
+  configuration  String? // e.g. "2 & 3 BHK" or "Office / Retail Units"
+
+  description String   @db.Text
+  amenities   String[] // simple string tags; normalize to a join table if amenities need icons/metadata per-property
+
+  featured Boolean @default(false)
+  views    Int     @default(0)
+
+  seoTitle       String?
+  seoDescription String?
+  seoKeywords    String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  images    PropertyImage[]
+  documents Document[]
+  nearby    NearbyPlace[]
+  videos    PropertyVideo[]
+  leads     Lead[]
+  visits    SiteVisit[]
+
+  @@index([status])
+  @@index([type])
+  @@index([location])
+}
+
+model PropertyImage {
+  id         String   @id @default(cuid())
+  url        String
+  order      Int      @default(0)
+  property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  propertyId String
+}
+
+model Document {
+  id         String   @id @default(cuid())
+  name       String
+  url        String
+  type       String? // brochure | legal | dtcp | rera | layout
+  property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  propertyId String
+}
+
+model NearbyPlace {
+  id         String   @id @default(cuid())
+  name       String
+  category   String // School | Hospital | Metro | Shopping | Highway | Tech Park
+  distanceKm Float
+  property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  propertyId String
+}
+
+model PropertyVideo {
+  id         String   @id @default(cuid())
+  title      String
+  youtubeUrl String
+  property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  propertyId String
+}
+
+model Lead {
+  id         String     @id @default(cuid())
+  name       String
+  mobile     String
+  email      String
+  message    String?
+  status     LeadStatus @default(NEW)
+  notes      String?
+  followUpAt DateTime?
+  createdAt  DateTime   @default(now())
+
+  property   Property? @relation(fields: [propertyId], references: [id])
+  propertyId String?
+
+  @@index([status])
+}
+
+model SiteVisit {
+  id       String      @id @default(cuid())
+  name     String
+  mobile   String?
+  date     DateTime
+  timeSlot String
+  status   VisitStatus @default(PENDING)
+
+  createdAt DateTime @default(now())
+
+  property   Property @relation(fields: [propertyId], references: [id])
+  propertyId String
+
+  @@index([status])
+}
