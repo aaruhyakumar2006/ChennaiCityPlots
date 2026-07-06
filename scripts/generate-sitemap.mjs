@@ -14,13 +14,17 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // ── Parse .env manually (no dotenv dependency needed) ──────────────────────
 function loadEnv() {
+  if (process.env.VITE_SUPABASE_URL && process.env.VITE_SUPABASE_ANON_KEY) {
+    return process.env;
+  }
+
   const envPath = path.resolve(__dirname, "../.env");
   if (!fs.existsSync(envPath)) {
-    console.error("❌  .env not found at", envPath);
-    process.exit(1);
+    console.warn("⚠️  .env file not found. Falling back to system environment variables.");
+    return process.env;
   }
   const lines = fs.readFileSync(envPath, "utf-8").split("\n");
-  const env = {};
+  const env = { ...process.env };
   for (const line of lines) {
     const trimmed = line.trim();
     if (!trimmed || trimmed.startsWith("#")) continue;
