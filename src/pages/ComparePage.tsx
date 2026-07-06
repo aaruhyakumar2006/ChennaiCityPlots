@@ -45,7 +45,7 @@ export default function ComparePage() {
           </p>
           <Link to="/properties"
             className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-white text-sm font-semibold transition hover:opacity-90"
-            style={{ background: "linear-gradient(135deg, #1A3FA8 0%, #2952D6 100%)" }}>
+            style={{ background: "linear-gradient(135deg, #0F5244 0%, #166534 100%)" }}>
             Browse Properties
           </Link>
         </div>
@@ -56,7 +56,7 @@ export default function ComparePage() {
   return (
     <>
       {/* Header */}
-      <div style={{ background: "linear-gradient(135deg, #1A3FA8 0%, #2952D6 100%)" }} className="text-white">
+      <div style={{ background: "linear-gradient(135deg, #0F5244 0%, #166534 100%)" }} className="text-white">
         <div className="max-w-5xl mx-auto px-5 md:px-8 py-8">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -65,7 +65,7 @@ export default function ComparePage() {
               </Link>
               <div>
                 <h1 className="font-display font-bold text-xl">Compare Properties</h1>
-                <p className="text-blue-200 text-xs">{items.length} properties selected</p>
+                <p className="text-emerald-200 text-xs">{items.length} properties selected</p>
               </div>
             </div>
             <button onClick={clear}

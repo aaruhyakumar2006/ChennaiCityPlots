@@ -6,7 +6,7 @@ import { formatDateShort } from "@/lib/format";
 import type { LeadWithProperty, LeadStatus } from "@/types";
 
 const STATUS_COLOR: Record<LeadStatus, string> = {
-  NEW: "bg-blue-50 text-blue-700",
+  NEW: "bg-emerald-50 text-emerald-700",
   CONTACTED: "bg-yellow-50 text-yellow-700",
   NEGOTIATION: "bg-orange-50 text-orange-700",
   CONVERTED: "bg-green-50 text-green-700",

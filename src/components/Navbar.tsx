@@ -181,7 +181,7 @@ export default function Navbar() {
                 </Link>
                 <Link to="/properties" onClick={() => setOpen(false)}
                   className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl text-sm font-bold text-white transition hover:opacity-90"
-                  style={{ background: "linear-gradient(135deg, #1A3FA8 0%, #2952D6 100%)" }}>
+                  style={{ background: "linear-gradient(135deg, #0F5244 0%, #166534 100%)" }}>
                   Browse Plots
                 </Link>
               </div>

@@ -109,7 +109,7 @@ export default function PropertiesPage() {
       </Helmet>
 
       {/* ── Page Hero ── */}
-      <div className="bg-gradient-to-r from-accent to-blue-700 text-white">
+      <div className="bg-gradient-to-r from-accent to-accent-700 text-white">
         <div className="max-w-7xl mx-auto px-5 md:px-8 py-10 md:py-14">
           <p className="text-white/70 text-sm font-medium mb-1">
             <Link to="/" className="hover:text-white transition">Home</Link> / Properties

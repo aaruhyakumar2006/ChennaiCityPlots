@@ -17,7 +17,7 @@ const CATEGORY_COLORS: Record<string, string> = {
   "metro station": "#8B5CF6",
   shopping:        "#F59E0B",
   mall:            "#F59E0B",
-  airport:         "#6366F1",
+  airport:         "#064E3B",
   "it park":       "#0EA5E9",
   tech:            "#0EA5E9",
   highway:         "#84CC16",

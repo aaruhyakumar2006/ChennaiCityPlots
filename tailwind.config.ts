@@ -11,23 +11,23 @@ const config: Config = {
       colors: {
         surface: "#F4F6FB",
         accent: {
-          DEFAULT: "#1A3FA8",   // deep royal blue
-          50:  "#EEF2FF",
-          100: "#E0E7FF",
-          200: "#C7D2FE",
-          400: "#818CF8",
-          500: "#2952D6",
-          600: "#1A3FA8",
-          700: "#153490",
-          900: "#0E2266",
+          DEFAULT: "#0F5244",   // sophisticated pine/emerald green
+          50:  "#ECFDF5",
+          100: "#D1FAE5",
+          200: "#A7F3D0",
+          400: "#34D399",
+          500: "#10B981",       // vibrant emerald
+          600: "#0F5244",       // primary dark emerald
+          700: "#064E3B",
+          900: "#022C22",
         },
         gold: {
-          DEFAULT: "#F59E0B",
-          50:  "#FFFBEB",
-          100: "#FEF3C7",
-          400: "#FBBF24",
-          500: "#F59E0B",
-          600: "#D97706",
+          DEFAULT: "#D4AF37",   // refined champagne gold
+          50:  "#FAF8F0",
+          100: "#F5ECD2",
+          400: "#E5C158",
+          500: "#D4AF37",
+          600: "#B89025",
         },
         ink: {
           DEFAULT: "#0D1117",
@@ -37,7 +37,7 @@ const config: Config = {
         muted: "#64748B",
         ok:   "#059669",
         line: "#E2E8F0",
-        navy: "#0A1628",
+        navy: "#0B1210",        // very dark pine charcoal
       },
       fontFamily: {
         display: ["Poppins", "sans-serif"],
@@ -49,15 +49,15 @@ const config: Config = {
       },
       boxShadow: {
         card:     "0 1px 3px rgba(10,22,40,0.06), 0 1px 2px rgba(10,22,40,0.04)",
-        cardHover:"0 20px 48px -12px rgba(26,63,168,0.22)",
+        cardHover:"0 20px 48px -12px rgba(15,82,68,0.22)",
         soft:     "0 8px 32px rgba(10,22,40,0.08)",
-        glow:     "0 0 40px rgba(26,63,168,0.35)",
-        "glow-gold": "0 0 32px rgba(245,158,11,0.4)",
+        glow:     "0 0 40px rgba(15,82,68,0.35)",
+        "glow-gold": "0 0 32px rgba(212,175,55,0.4)",
       },
       backgroundImage: {
-        "hero-gradient": "linear-gradient(135deg, #050C1A 0%, #0A1628 40%, #0D1F45 70%, #050C1A 100%)",
-        "accent-gradient": "linear-gradient(135deg, #1A3FA8 0%, #2952D6 100%)",
-        "gold-gradient": "linear-gradient(135deg, #F59E0B 0%, #FBBF24 100%)",
+        "hero-gradient": "linear-gradient(135deg, #050E0C 0%, #0A1412 40%, #0F2621 70%, #050E0C 100%)",
+        "accent-gradient": "linear-gradient(135deg, #0F5244 0%, #166534 100%)",
+        "gold-gradient": "linear-gradient(135deg, #D4AF37 0%, #E5C158 100%)",
         "card-gradient": "linear-gradient(145deg, #FFFFFF 0%, #F4F6FB 100%)",
       },
       animation: {

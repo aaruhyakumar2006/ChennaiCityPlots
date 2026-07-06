@@ -8,7 +8,7 @@ export default function NotFoundPage() {
 
       {/* Orbs */}
       <div className="absolute w-96 h-96 rounded-full top-[-8rem] left-[-8rem] pointer-events-none"
-        style={{ background: "radial-gradient(circle, rgba(26,63,168,0.3) 0%, transparent 70%)", filter: "blur(60px)" }} />
+        style={{ background: "radial-gradient(circle, rgba(15, 82, 68,0.3) 0%, transparent 70%)", filter: "blur(60px)" }} />
       <div className="absolute w-80 h-80 rounded-full bottom-[-6rem] right-[-6rem] pointer-events-none"
         style={{ background: "radial-gradient(circle, rgba(99,102,241,0.2) 0%, transparent 70%)", filter: "blur(60px)" }} />
 
@@ -18,7 +18,7 @@ export default function NotFoundPage() {
         <div className="relative mb-6 select-none">
           <p className="font-display font-black text-[10rem] md:text-[14rem] leading-none"
             style={{
-              background: "linear-gradient(135deg, #1A3FA8 0%, #4F72E8 50%, #6366F1 100%)",
+              background: "linear-gradient(135deg, #0F5244 0%, #10B981 50%, #064E3B 100%)",
               WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
               backgroundClip: "text", opacity: 0.4,
             }}>
@@ -27,7 +27,7 @@ export default function NotFoundPage() {
           {/* Floating house icon over the 0 */}
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="glass rounded-3xl p-6 shadow-glow">
-              <Home className="w-12 h-12 md:w-16 md:h-16 text-blue-400" strokeWidth={1.5} />
+              <Home className="w-12 h-12 md:w-16 md:h-16 text-emerald-400" strokeWidth={1.5} />
             </div>
           </div>
         </div>
@@ -42,12 +42,12 @@ export default function NotFoundPage() {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-8">
           <Link to="/"
             className="flex items-center gap-2 px-7 py-3.5 rounded-xl font-semibold text-sm text-white transition hover:opacity-90"
-            style={{ background: "linear-gradient(135deg, #1A3FA8 0%, #2952D6 100%)", boxShadow: "0 4px 20px rgba(26,63,168,0.4)" }}>
+            style={{ background: "linear-gradient(135deg, #0F5244 0%, #166534 100%)", boxShadow: "0 4px 20px rgba(15, 82, 68,0.4)" }}>
             <Home className="w-4 h-4" /> Go Home
           </Link>
           <Link to="/properties"
             className="glass flex items-center gap-2 px-7 py-3.5 rounded-xl font-semibold text-sm text-white hover:bg-white/15 transition">
-            <Search className="w-4 h-4 text-blue-400" /> Browse Properties <ArrowRight className="w-4 h-4" />
+            <Search className="w-4 h-4 text-emerald-400" /> Browse Properties <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
 

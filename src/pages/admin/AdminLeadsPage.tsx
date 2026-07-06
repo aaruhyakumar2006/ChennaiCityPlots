@@ -7,7 +7,7 @@ import { formatDateShort } from "@/lib/format";
 import type { LeadWithProperty, LeadStatus } from "@/types";
 
 const STATUS_COLORS: Record<string, string> = {
-  NEW:         "bg-blue-50 text-blue-700 border-blue-200",
+  NEW:         "bg-emerald-50 text-emerald-700 border-emerald-200",
   CONTACTED:   "bg-yellow-50 text-yellow-700 border-yellow-200",
   NEGOTIATION: "bg-orange-50 text-orange-700 border-orange-200",
   CONVERTED:   "bg-green-50 text-green-700 border-green-200",
@@ -51,7 +51,7 @@ export default function AdminLeadsPage() {
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
         {[
           { label: "Total Leads",  value: leads.length,    color: "text-ink" },
-          { label: "New",          value: newCount,        color: "text-blue-600" },
+          { label: "New",          value: newCount,        color: "text-emerald-600" },
           { label: "Converted",    value: convertedCount,  color: "text-green-600" },
           { label: "Conversion %", value: leads.length > 0 ? `${Math.round((convertedCount / leads.length) * 100)}%` : "0%", color: "text-accent" },
         ].map((s) => (

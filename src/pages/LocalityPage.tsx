@@ -15,7 +15,7 @@ interface LocalityStats {
 }
 
 const STAT_CONFIGS = [
-  { key: "total",    label: "Total Listings",   format: (s: LocalityStats) => `${s.total} plots`,                                    icon: Building2,  color: "from-blue-500 to-indigo-600" },
+  { key: "total",    label: "Total Listings",   format: (s: LocalityStats) => `${s.total} plots`,                                    icon: Building2,  color: "from-accent to-emerald-700" },
   { key: "avgPrice", label: "Avg. Price",        format: (s: LocalityStats) => formatPriceLabel(s.avgPrice),                          icon: TrendingUp, color: "from-emerald-500 to-teal-600" },
   { key: "avgSqft",  label: "Avg. ₹/sq.ft",     format: (s: LocalityStats) => s.avgSqft ? `₹${s.avgSqft.toLocaleString("en-IN")}` : "—", icon: BarChart3,  color: "from-amber-500 to-orange-600" },
   { key: "range",    label: "Price Range",       format: (s: LocalityStats) => `${formatPriceLabel(s.minPrice)} – ${formatPriceLabel(s.maxPrice)}`, icon: MapPin, color: "from-violet-500 to-purple-600" },
@@ -64,7 +64,7 @@ export default function LocalityPage() {
       {/* Hero */}
       <div className="relative aurora-bg overflow-hidden">
         <div className="orb w-80 h-80 top-[-6rem] right-[-6rem]"
-          style={{ background: "radial-gradient(circle, rgba(26,63,168,0.4) 0%, transparent 70%)" }} />
+          style={{ background: "radial-gradient(circle, rgba(15, 82, 68,0.4) 0%, transparent 70%)" }} />
         <div className="max-w-7xl mx-auto px-5 md:px-8 py-12 relative z-10">
           {/* Breadcrumb */}
           <p className="text-slate-500 text-sm mb-5">
@@ -78,8 +78,8 @@ export default function LocalityPage() {
           </p>
 
           <div className="flex items-center gap-2 mb-3">
-            <MapPin className="w-5 h-5 text-blue-400" />
-            <span className="text-blue-400 text-sm font-bold uppercase tracking-widest">Locality Guide</span>
+            <MapPin className="w-5 h-5 text-emerald-400" />
+            <span className="text-emerald-400 text-sm font-bold uppercase tracking-widest">Locality Guide</span>
           </div>
           <h1 className="font-display font-black text-3xl md:text-5xl text-white leading-tight mb-3">
             Properties in{" "}
@@ -132,7 +132,7 @@ export default function LocalityPage() {
             <p className="text-sm text-muted mb-6">We're adding new properties regularly. Check back soon!</p>
             <Link to="/properties"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-white text-sm font-semibold transition hover:opacity-90"
-              style={{ background: "linear-gradient(135deg, #1A3FA8 0%, #2952D6 100%)" }}>
+              style={{ background: "linear-gradient(135deg, #0F5244 0%, #166534 100%)" }}>
               Browse All Properties <ArrowRight className="w-4 h-4" />
             </Link>
           </div>

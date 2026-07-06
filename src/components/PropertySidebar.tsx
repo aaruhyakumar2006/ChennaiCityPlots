@@ -284,7 +284,7 @@ export default function PropertySidebar({ onApply }: { onApply?: () => void }) {
           </button>
           <button onClick={apply}
             className="flex-1 py-2.5 rounded-xl text-white text-sm font-semibold transition hover:opacity-90"
-            style={{ background: "linear-gradient(135deg, #1A3FA8 0%, #2952D6 100%)" }}>
+            style={{ background: "linear-gradient(135deg, #0F5244 0%, #166534 100%)" }}>
             Apply Filters
           </button>
         </div>

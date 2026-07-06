@@ -49,10 +49,10 @@ export default function QuickEnquireModal({ propertyId, propertyName, onClose }:
 
         {/* Header */}
         <div className="px-6 py-4 flex items-center justify-between"
-          style={{ background: "linear-gradient(135deg, #1A3FA8 0%, #2952D6 100%)" }}>
+          style={{ background: "linear-gradient(135deg, #0F5244 0%, #166534 100%)" }}>
           <div>
             <p className="font-display font-bold text-white text-sm">Quick Enquiry</p>
-            <p className="text-blue-200 text-xs line-clamp-1 mt-0.5">{propertyName}</p>
+            <p className="text-emerald-200 text-xs line-clamp-1 mt-0.5">{propertyName}</p>
           </div>
           <button onClick={onClose} aria-label="Close"
             className="w-8 h-8 rounded-full bg-white/15 hover:bg-white/25 flex items-center justify-center transition">
@@ -81,7 +81,7 @@ export default function QuickEnquireModal({ propertyId, propertyName, onClose }:
               {error && <p className="text-xs text-red-600 bg-red-50 border border-red-200 rounded-xl px-3 py-2">{error}</p>}
               <button type="submit" disabled={status === "loading"}
                 className="w-full py-3.5 rounded-xl text-white font-semibold text-sm disabled:opacity-60 flex items-center justify-center gap-2 transition hover:opacity-90"
-                style={{ background: "linear-gradient(135deg, #1A3FA8 0%, #2952D6 100%)", boxShadow: "0 4px 16px rgba(26,63,168,0.3)" }}>
+                style={{ background: "linear-gradient(135deg, #0F5244 0%, #166534 100%)", boxShadow: "0 4px 16px rgba(15, 82, 68,0.3)" }}>
                 {status === "loading" ? <><Loader2 className="w-4 h-4 animate-spin" /> Sending…</> : <><Send className="w-4 h-4" /> Send Enquiry</>}
               </button>
               <p className="text-[11px] text-slate-400 text-center">🔒 100% confidential</p>

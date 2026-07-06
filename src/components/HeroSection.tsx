@@ -21,9 +21,9 @@ const PLOTS = [
 ];
 
 const S = {
-  available: { fill: "rgba(41,82,214,0.22)",  stroke: "#5B80F0", text: "#A5BCFF" },
-  sold:      { fill: "rgba(239,68,68,0.18)",   stroke: "#f87171", text: "#FECACA" },
-  booked:    { fill: "rgba(245,158,11,0.2)",   stroke: "#FCD34D", text: "#FDE68A" },
+  available: { fill: "rgba(16,185,129,0.12)",  stroke: "#10B981", text: "#A7F3D0" },
+  sold:      { fill: "rgba(239,68,68,0.14)",   stroke: "#f87171", text: "#FECACA" },
+  booked:    { fill: "rgba(212,175,55,0.15)",  stroke: "#D4AF37", text: "#FDE68A" },
 } as const;
 
 // ── Plot grid SVG ─────────────────────────────────────────────────────────────
@@ -36,7 +36,7 @@ function PlotGrid() {
     <svg viewBox="0 0 100 90" className="w-full h-full" preserveAspectRatio="xMidYMid meet">
       <defs>
         <pattern id="g" width="5" height="5" patternUnits="userSpaceOnUse">
-          <path d="M5 0L0 0 0 5" fill="none" stroke="rgba(79,114,232,0.1)" strokeWidth="0.25"/>
+          <path d="M5 0L0 0 0 5" fill="none" stroke="rgba(16,185,129,0.06)" strokeWidth="0.25"/>
         </pattern>
         <filter id="glow"><feGaussianBlur stdDeviation="1.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
       </defs>
@@ -53,10 +53,10 @@ function PlotGrid() {
 
       {/* North compass */}
       <g transform="translate(93.5,4.5)">
-        <circle cx="0" cy="0" r="3.8" fill="rgba(10,22,40,0.9)" stroke="rgba(79,114,232,0.5)" strokeWidth="0.5"/>
-        <path d="M0,-3.2 L1,-0.5 L0,0.8 L-1,-0.5Z" fill="#5B80F0"/>
+        <circle cx="0" cy="0" r="3.8" fill="rgba(10,22,40,0.9)" stroke="rgba(16,185,129,0.3)" strokeWidth="0.5"/>
+        <path d="M0,-3.2 L1,-0.5 L0,0.8 L-1,-0.5Z" fill="#10B981"/>
         <path d="M0,3.2 L1,0.5 L0,-0.8 L-1,0.5Z" fill="rgba(255,255,255,0.15)"/>
-        <text x="0" y="-4.5" textAnchor="middle" fill="#93B4FF" fontSize="1.9" fontWeight="bold">N</text>
+        <text x="0" y="-4.5" textAnchor="middle" fill="#A7F3D0" fontSize="1.9" fontWeight="bold">N</text>
       </g>
 
       {/* Plots */}
@@ -87,13 +87,11 @@ function PlotGrid() {
         );
       })}
 
-      {/* Scan line */}
-      <line x1="0" y1="0" x2="100" y2="0" stroke="rgba(79,114,232,0.6)" strokeWidth="0.4"
-        style={{ animation: "scanLine 5s ease-in-out infinite" }}/>
+      {/* Scan line removed to simplify animations */}
 
       {/* Legend */}
       <g transform="translate(3,82)">
-        {[["#5B80F0","Available"],["#FCD34D","Booked"],["#f87171","Sold"]].map(([col,lbl],i) => (
+        {[["#10B981","Available"],["#D4AF37","Booked"],["#f87171","Sold"]].map(([col,lbl],i) => (
           <g key={lbl} transform={`translate(${i*30},0)`}>
             <rect width="4" height="2.8" fill={col} opacity="0.3" stroke={col} strokeWidth="0.35" rx="0.4"/>
             <text x="5.5" y="2.2" fill="rgba(148,163,184,0.85)" fontSize="1.9" fontFamily="sans-serif">{lbl}</text>
@@ -123,13 +121,13 @@ function Typewriter() {
         style={{
           fontFamily: "Poppins, sans-serif", fontWeight: 800,
           fontSize: "inherit", lineHeight: "inherit",
-          background: "linear-gradient(90deg, #F59E0B 0%, #FBBF24 50%, #F59E0B 100%)",
-          backgroundSize: "200% 100%", animation: phase === "hold" ? "goldShimmer 2.5s linear infinite" : undefined,
+          background: "linear-gradient(90deg, #D4AF37 0%, #E5C158 50%, #D4AF37 100%)",
+          backgroundSize: "200% 100%", animation: phase === "hold" ? "goldShimmer 3s linear infinite" : undefined,
           WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
         }}>
         {WORDS[idx]}
       </span>
-      <span className="typewriter-cursor ml-1.5" style={{ background: "#F59E0B" }} />
+      <span className="typewriter-cursor ml-1.5" style={{ background: "#D4AF37" }} />
     </span>
   );
 }
@@ -166,40 +164,27 @@ export default function HeroSection({ totalCount, happyBuyers = 0 }: { totalCoun
       className="relative w-full overflow-hidden"
       style={{
         minHeight: "96vh",
-        background: "linear-gradient(145deg, #03070F 0%, #060D1E 30%, #0A1628 60%, #040A18 100%)",
+        background: "linear-gradient(145deg, #020604 0%, #050E0C 30%, #0A1412 60%, #030605 100%)",
       }}
     >
       {/* ── Animated mesh gradient ── */}
       <div className="absolute inset-0 pointer-events-none" style={{
-        background: "radial-gradient(ellipse 80% 60% at 20% 30%, rgba(26,63,168,0.45) 0%, transparent 65%), radial-gradient(ellipse 60% 50% at 80% 70%, rgba(99,102,241,0.3) 0%, transparent 60%), radial-gradient(ellipse 50% 40% at 50% 110%, rgba(245,158,11,0.18) 0%, transparent 55%)",
-        animation: "auroraShift 10s ease-in-out infinite",
+        background: "radial-gradient(ellipse 80% 60% at 20% 30%, rgba(15,82,68,0.35) 0%, transparent 65%), radial-gradient(ellipse 60% 50% at 80% 70%, rgba(6,78,59,0.2) 0%, transparent 60%), radial-gradient(ellipse 50% 40% at 50% 110%, rgba(212,175,55,0.06) 0%, transparent 55%)",
+        animation: "auroraShift 16s ease-in-out infinite",
       }}/>
 
       {/* ── Grid lines ── */}
       <div className="absolute inset-0 pointer-events-none" style={{
-        backgroundImage: "linear-gradient(rgba(79,114,232,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(79,114,232,0.04) 1px, transparent 1px)",
+        backgroundImage: "linear-gradient(rgba(16,185,129,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(16,185,129,0.03) 1px, transparent 1px)",
         backgroundSize: "60px 60px",
       }}/>
 
       {/* ── Glow orbs ── */}
-      <div className="absolute pointer-events-none" style={{ width:700, height:700, top:-300, left:-250, borderRadius:"50%", background:"radial-gradient(circle, rgba(26,63,168,0.4) 0%, transparent 65%)", filter:"blur(40px)", animation:"orbFloat 12s ease-in-out infinite" }}/>
-      <div className="absolute pointer-events-none" style={{ width:550, height:550, top:"15%", right:-200, borderRadius:"50%", background:"radial-gradient(circle, rgba(99,102,241,0.3) 0%, transparent 65%)", filter:"blur(40px)", animation:"orbFloat 16s ease-in-out 3s infinite" }}/>
-      <div className="absolute pointer-events-none" style={{ width:400, height:400, bottom:-150, left:"35%", borderRadius:"50%", background:"radial-gradient(circle, rgba(245,158,11,0.18) 0%, transparent 65%)", filter:"blur(50px)", animation:"orbFloat 20s ease-in-out 7s infinite" }}/>
+      <div className="absolute pointer-events-none" style={{ width:700, height:700, top:-300, left:-250, borderRadius:"50%", background:"radial-gradient(circle, rgba(15,82,68,0.3) 0%, transparent 65%)", filter:"blur(40px)", animation:"orbFloat 20s ease-in-out infinite" }}/>
+      <div className="absolute pointer-events-none" style={{ width:550, height:550, top:"15%", right:-200, borderRadius:"50%", background:"radial-gradient(circle, rgba(6,78,59,0.2) 0%, transparent 65%)", filter:"blur(40px)", animation:"orbFloat 24s ease-in-out 3s infinite" }}/>
+      <div className="absolute pointer-events-none" style={{ width:400, height:400, bottom:-150, left:"35%", borderRadius:"50%", background:"radial-gradient(circle, rgba(212,175,55,0.08) 0%, transparent 65%)", filter:"blur(50px)", animation:"orbFloat 28s ease-in-out 7s infinite" }}/>
 
-      {/* ── Micro particles ── */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {Array.from({ length: 28 }).map((_, i) => (
-          <div key={i} className="absolute rounded-full" style={{
-            width:  `${1 + (i % 3)}px`,
-            height: `${1 + (i % 3)}px`,
-            background: i % 5 === 0 ? "rgba(245,158,11,0.8)" : i % 3 === 0 ? "rgba(99,102,241,0.7)" : "rgba(79,114,232,0.6)",
-            left: `${(i * 3.7 + 2) % 100}%`,
-            top:  `${(i * 6.3 + 8) % 100}%`,
-            opacity: 0.3 + (i % 4) * 0.15,
-            animation: `floatParticle ${5 + i % 8}s ease-in-out ${(i * 0.45) % 6}s infinite alternate`,
-          }}/>
-        ))}
-      </div>
+      {/* Micro particles removed to keep visual style neat and premium */}
 
       {/* ── Content ── */}
       <div className="relative z-10 max-w-7xl mx-auto px-5 md:px-8 grid lg:grid-cols-2 gap-10 items-center py-24 min-h-[96vh]">
@@ -209,9 +194,9 @@ export default function HeroSection({ totalCount, happyBuyers = 0 }: { totalCoun
 
           {/* Trust badge */}
           <div className="inline-flex items-center gap-2 rounded-full px-4 py-2 mb-8 stat-float"
-            style={{ animationDelay: "0.15s", background: "linear-gradient(90deg, #F59E0B, #FBBF24, #F59E0B)", backgroundSize: "200% 100%", animation: "goldShimmer 3s linear infinite, statFloat 0.75s 0.15s both" }}>
-            <Star className="w-3.5 h-3.5 text-amber-900 fill-amber-900 shrink-0"/>
-            <span className="text-amber-900 text-xs font-bold tracking-wide uppercase">Chennai's #1 Trusted Plot Broker</span>
+            style={{ animationDelay: "0.15s", background: "linear-gradient(90deg, #D4AF37, #E5C158, #D4AF37)", backgroundSize: "200% 100%", animation: "goldShimmer 4s linear infinite, statFloat 0.75s 0.15s both" }}>
+            <Star className="w-3.5 h-3.5 text-amber-955 fill-amber-955 shrink-0"/>
+            <span className="text-amber-955 text-xs font-bold tracking-wide uppercase">Chennai's #1 Trusted Plot Broker</span>
           </div>
 
           {/* Headline */}
@@ -242,8 +227,8 @@ export default function HeroSection({ totalCount, happyBuyers = 0 }: { totalCoun
               { icon: TrendingUp,  label: "RERA Listed" },
             ].map(({ icon: Icon, label }) => (
               <span key={label} className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-300 px-3.5 py-2 rounded-full"
-                style={{ background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.12)", backdropFilter: "blur(8px)" }}>
-                <Icon className="w-3.5 h-3.5 text-blue-400" />{label}
+                style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.08)", backdropFilter: "blur(8px)" }}>
+                <Icon className="w-3.5 h-3.5 text-emerald-400" />{label}
               </span>
             ))}
           </div>
@@ -251,12 +236,12 @@ export default function HeroSection({ totalCount, happyBuyers = 0 }: { totalCoun
           {/* CTAs */}
           <div className="flex flex-wrap gap-3 mb-9 stat-float" style={{ animationDelay: "1s" }}>
             <Link to="/properties" className="cta-glow group inline-flex items-center gap-2.5 px-8 py-4 rounded-2xl font-bold text-sm text-white"
-              style={{ background: "linear-gradient(135deg, #1A3FA8 0%, #2952D6 100%)", boxShadow: "0 6px 30px rgba(26,63,168,0.55)" }}>
+              style={{ background: "linear-gradient(135deg, #0F5244 0%, #166534 100%)", boxShadow: "0 6px 30px rgba(15,82,68,0.4)" }}>
               Browse Plots <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform"/>
             </Link>
             <a href="tel:+916369678465" className="inline-flex items-center gap-2.5 px-8 py-4 rounded-2xl font-bold text-sm text-white transition hover:bg-white/15"
-              style={{ background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.15)", backdropFilter: "blur(12px)" }}>
-              <Phone className="w-4 h-4 text-blue-400"/> Call Now
+              style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", backdropFilter: "blur(12px)" }}>
+              <Phone className="w-4 h-4 text-emerald-400"/> Call Now
             </a>
           </div>
 
@@ -287,18 +272,17 @@ export default function HeroSection({ totalCount, happyBuyers = 0 }: { totalCoun
           <div className="relative w-full rounded-2xl overflow-hidden"
             style={{
               aspectRatio: "10/9",
-              background: "rgba(3,8,20,0.92)",
-              border: "1px solid rgba(79,114,232,0.35)",
-              boxShadow: "0 0 0 1px rgba(79,114,232,0.1), 0 40px 80px rgba(0,0,0,0.6), 0 0 80px rgba(26,63,168,0.2)",
-              transform: "perspective(1400px) rotateY(-5deg) rotateX(2deg)",
-              transition: "transform 0.5s cubic-bezier(0.22,1,0.36,1)",
+              background: "rgba(10,20,18,0.92)",
+              border: "1px solid rgba(16,185,129,0.2)",
+              boxShadow: "0 25px 50px -12px rgba(0,0,0,0.5), 0 0 80px rgba(15,82,68,0.15)",
+              transition: "transform 0.3s ease, border-color 0.3s ease",
             }}
-            onMouseEnter={e => (e.currentTarget.style.transform = "perspective(1400px) rotateY(0deg) rotateX(0deg)")}
-            onMouseLeave={e => (e.currentTarget.style.transform = "perspective(1400px) rotateY(-5deg) rotateX(2deg)")}
+            onMouseEnter={e => (e.currentTarget.style.borderColor = "rgba(16,185,129,0.35)")}
+            onMouseLeave={e => (e.currentTarget.style.borderColor = "rgba(16,185,129,0.2)")}
           >
             {/* Chrome bar */}
             <div className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between px-4 py-2.5"
-              style={{ background: "rgba(5,12,28,0.95)", borderBottom: "1px solid rgba(79,114,232,0.2)" }}>
+              style={{ background: "rgba(5,12,10,0.95)", borderBottom: "1px solid rgba(16,185,129,0.15)" }}>
               <div className="flex gap-1.5">
                 {["#FF5F57","#FFBD2E","#28CA41"].map(c => <div key={c} className="w-3 h-3 rounded-full" style={{ background: c }}/>)}
               </div>
@@ -314,16 +298,9 @@ export default function HeroSection({ totalCount, happyBuyers = 0 }: { totalCoun
               <PlotGrid />
             </div>
 
-            {/* Scan sweep */}
-            <div className="absolute inset-0 top-9 pointer-events-none"
-              style={{
-                background: "linear-gradient(180deg, transparent 0%, rgba(26,63,168,0.06) 50%, transparent 100%)",
-                animation: "scanOverlay 4.5s ease-in-out infinite",
-              }}/>
-
             {/* Inner frame glow */}
             <div className="absolute inset-0 pointer-events-none rounded-2xl"
-              style={{ boxShadow: "inset 0 0 40px rgba(26,63,168,0.15), inset 0 1px 0 rgba(255,255,255,0.05)" }}/>
+              style={{ boxShadow: "inset 0 0 40px rgba(16,185,129,0.08), inset 0 1px 0 rgba(255,255,255,0.05)" }}/>
           </div>
 
           <p className="text-center text-[11px] text-slate-600 mt-3 font-mono tracking-widest uppercase">
@@ -338,7 +315,7 @@ export default function HeroSection({ totalCount, happyBuyers = 0 }: { totalCoun
         <span className="text-slate-600 text-[10px] tracking-widest uppercase font-medium">Scroll</span>
         <div className="w-5 h-8 rounded-full flex items-start justify-center pt-1.5"
           style={{ border: "1px solid rgba(255,255,255,0.15)" }}>
-          <div className="w-1 h-2 rounded-full bg-blue-500" style={{ animation: "scrollDot 1.8s ease-in-out infinite" }}/>
+          <div className="w-1 h-2 rounded-full bg-emerald-500" style={{ animation: "scrollDot 1.8s ease-in-out infinite" }}/>
         </div>
       </div>
 

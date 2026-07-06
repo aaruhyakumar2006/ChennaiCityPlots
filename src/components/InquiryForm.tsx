@@ -66,9 +66,9 @@ export default function InquiryForm({ propertyId }: { propertyId: string }) {
   return (
     <div className="rounded-2xl border border-line bg-white shadow-soft overflow-hidden">
       {/* Header strip */}
-      <div className="px-6 py-4" style={{ background: "linear-gradient(135deg, #1A3FA8 0%, #2952D6 100%)" }}>
+      <div className="px-6 py-4" style={{ background: "linear-gradient(135deg, #0F5244 0%, #166534 100%)" }}>
         <h3 className="font-display font-bold text-white text-base mb-0.5">Interested in this property?</h3>
-        <p className="text-blue-200 text-xs">Get a free callback within 24 hours</p>
+        <p className="text-emerald-200 text-xs">Get a free callback within 24 hours</p>
       </div>
 
       <form onSubmit={handleSubmit} className="p-5 space-y-3">
@@ -91,7 +91,7 @@ export default function InquiryForm({ propertyId }: { propertyId: string }) {
 
         <button type="submit" disabled={status === "loading"}
           className="w-full py-3.5 rounded-xl text-white font-semibold text-sm disabled:opacity-60 flex items-center justify-center gap-2 transition hover:opacity-90"
-          style={{ background: "linear-gradient(135deg, #1A3FA8 0%, #2952D6 100%)", boxShadow: "0 4px 16px rgba(26,63,168,0.35)" }}>
+          style={{ background: "linear-gradient(135deg, #0F5244 0%, #166534 100%)", boxShadow: "0 4px 16px rgba(15, 82, 68,0.35)" }}>
           {status === "loading"
             ? <><Loader2 className="w-4 h-4 animate-spin" /> Sending…</>
             : <><Send className="w-4 h-4" /> Send Enquiry</>}

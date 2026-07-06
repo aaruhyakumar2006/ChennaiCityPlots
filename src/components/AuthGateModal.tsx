@@ -80,7 +80,7 @@ export default function AuthGateModal() {
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md relative animate-fadeDown overflow-hidden">
 
         {/* Top gradient strip */}
-        <div className="h-1.5 w-full" style={{ background: "linear-gradient(90deg, #1A3FA8, #6366F1, #F59E0B)" }} />
+        <div className="h-1.5 w-full" style={{ background: "linear-gradient(90deg, #0F5244, #064E3B, #F59E0B)" }} />
 
         {/* Close */}
         {mode === "login" && (
@@ -131,7 +131,7 @@ export default function AuthGateModal() {
               <FloatField icon={Mail}  label="Email Address" value={email}    onChange={setEmail}    required type="email" autoComplete="email" />
               <FloatField icon={Lock}  label="Password (min 6 chars)" value={password} onChange={setPassword} required type="password" minLength={6} autoComplete="new-password" />
               <button type="submit" disabled={loading} className={btnCls}
-                style={{ background: "linear-gradient(135deg, #1A3FA8 0%, #2952D6 100%)", boxShadow: "0 4px 16px rgba(26,63,168,0.35)" }}>
+                style={{ background: "linear-gradient(135deg, #0F5244 0%, #166534 100%)", boxShadow: "0 4px 16px rgba(15, 82, 68,0.35)" }}>
                 {loading && <Loader2 className="w-4 h-4 animate-spin" />}
                 {loading ? "Creating account…" : "Create Free Account"}
               </button>
@@ -149,7 +149,7 @@ export default function AuthGateModal() {
               <FloatField icon={Mail} label="Email Address" value={email}    onChange={setEmail}    required type="email" autoComplete="email" />
               <FloatField icon={Lock} label="Password"      value={password} onChange={setPassword} required type="password" autoComplete="current-password" />
               <button type="submit" disabled={loading} className={btnCls}
-                style={{ background: "linear-gradient(135deg, #1A3FA8 0%, #2952D6 100%)", boxShadow: "0 4px 16px rgba(26,63,168,0.35)" }}>
+                style={{ background: "linear-gradient(135deg, #0F5244 0%, #166534 100%)", boxShadow: "0 4px 16px rgba(15, 82, 68,0.35)" }}>
                 {loading && <Loader2 className="w-4 h-4 animate-spin" />}
                 {loading ? "Signing in…" : "Sign In"}
               </button>
@@ -169,7 +169,7 @@ export default function AuthGateModal() {
                 className="w-full text-center tracking-[0.5em] font-bold text-2xl py-4 rounded-xl border-[1.5px] border-line focus:border-accent focus:outline-none bg-slate-50"
               />
               <button type="submit" disabled={loading} className={btnCls}
-                style={{ background: "linear-gradient(135deg, #1A3FA8 0%, #2952D6 100%)" }}>
+                style={{ background: "linear-gradient(135deg, #0F5244 0%, #166534 100%)" }}>
                 {loading && <Loader2 className="w-4 h-4 animate-spin" />}
                 {loading ? "Verifying…" : "Verify & Continue"}
               </button>

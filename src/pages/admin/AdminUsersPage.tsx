@@ -245,7 +245,7 @@ GRANT EXECUTE ON FUNCTION get_users_list() TO authenticated;`;
         {[
           { label: "Total Registered Accounts", value: users.length, icon: UserCheck, color: "text-accent bg-accent/8" },
           { label: "Active Recently (Last 7 Days)", value: users.filter(u => u.last_sign_in_at && (Date.now() - new Date(u.last_sign_in_at).getTime()) < 7 * 24 * 60 * 60 * 1000).length, icon: UserCheck, color: "text-green-600 bg-green-50" },
-          { label: "New Registrations (Last 30 Days)", value: users.filter(u => u.created_at && (Date.now() - new Date(u.created_at).getTime()) < 30 * 24 * 60 * 60 * 1000).length, icon: UserCheck, color: "text-blue-600 bg-blue-50" },
+          { label: "New Registrations (Last 30 Days)", value: users.filter(u => u.created_at && (Date.now() - new Date(u.created_at).getTime()) < 30 * 24 * 60 * 60 * 1000).length, icon: UserCheck, color: "text-emerald-600 bg-emerald-50" },
         ].map((stat, i) => (
           <div key={i} className="bg-white rounded-xl border border-line p-5 flex items-center justify-between shadow-sm">
             <div>

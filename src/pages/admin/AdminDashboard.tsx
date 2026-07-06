@@ -128,7 +128,7 @@ export default function AdminDashboard() {
   const readyLen = (circumference * readyPct) / 100;
 
   const statCards = [
-    { label: "Total Properties",    value: stats.total,          icon: HomeIcon,     color: "bg-blue-50 text-blue-600",    trend: null },
+    { label: "Total Properties",    value: stats.total,          icon: HomeIcon,     color: "bg-emerald-50 text-emerald-600",    trend: null },
     { label: "Ready to Move",       value: stats.ready,          icon: CheckCircle2, color: "bg-green-50 text-green-600",  trend: null },
     { label: "Under Construction",  value: underConstruction,    icon: BadgeCheck,   color: "bg-amber-50 text-amber-600",  trend: null },
     { label: "Total Leads",         value: stats.leadCount,      icon: Users,        color: "bg-purple-50 text-purple-600",trend: null },
@@ -170,7 +170,7 @@ export default function AdminDashboard() {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {[
           { label: "Conversion Rate",   value: `${conversionPct}%`,        icon: TrendingUp, color: "text-green-600" },
-          { label: "Converted Leads",   value: stats.convertedLeads,        icon: CheckCircle2, color: "text-blue-600" },
+          { label: "Converted Leads",   value: stats.convertedLeads,        icon: CheckCircle2, color: "text-emerald-600" },
           { label: "Pending Visits",    value: stats.visitCount,             icon: CalendarDays, color: "text-amber-600" },
           { label: "Property Reviews",  value: stats.reviewCount,            icon: Star, color: "text-purple-600" },
         ].map((k) => (
@@ -200,7 +200,7 @@ export default function AdminDashboard() {
                   style={{
                     height: `${m.count > 0 ? (m.count / maxMonth) * 100 : 3}%`,
                     background: m.count > 0
-                      ? "linear-gradient(180deg, #2952D6 0%, #1A3FA8 100%)"
+                      ? "linear-gradient(180deg, #166534 0%, #0F5244 100%)"
                       : "#F1F5F9",
                     minHeight: "4px",
                   }}
@@ -218,13 +218,13 @@ export default function AdminDashboard() {
             <svg width="140" height="140" viewBox="0 0 100 100" className="-rotate-90">
               <circle cx="50" cy="50" r="42" fill="none" stroke="#FEF3C7" strokeWidth="13"/>
               <circle cx="50" cy="50" r="42" fill="none"
-                stroke="url(#blueGrad)" strokeWidth="13"
+                stroke="url(#greenGrad)" strokeWidth="13"
                 strokeDasharray={`${readyLen} ${circumference}`}
                 strokeLinecap="round"/>
               <defs>
-                <linearGradient id="blueGrad" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0%" stopColor="#1A3FA8"/>
-                  <stop offset="100%" stopColor="#2952D6"/>
+                <linearGradient id="greenGrad" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stopColor="#0F5244"/>
+                  <stop offset="100%" stopColor="#166534"/>
                 </linearGradient>
               </defs>
             </svg>
@@ -235,7 +235,7 @@ export default function AdminDashboard() {
           </div>
           <div className="flex gap-4 text-xs mt-4">
             <span className="flex items-center gap-1.5">
-              <span className="w-2.5 h-2.5 rounded-full" style={{ background: "linear-gradient(135deg, #1A3FA8, #2952D6)" }}/>
+              <span className="w-2.5 h-2.5 rounded-full" style={{ background: "linear-gradient(135deg, #0F5244, #166534)" }}/>
               Ready ({stats.ready})
             </span>
             <span className="flex items-center gap-1.5">
