@@ -128,7 +128,7 @@ export default function PropertyDetailPage() {
   if (!property) return null;
 
   const siteUrl = import.meta.env.VITE_SITE_URL ?? "";
-  const seoTitle = (property as any).seo_title?.trim() || `${property.name} — Chennai City Plots`;
+  const seoTitle = (property as any).seo_title?.trim() || `${property.name} — Madras City Plots`;
   const seoDesc  = (property as any).seo_description?.trim() || property.description.slice(0, 155);
   const seoKw    = (property as any).seo_keywords?.trim();
   const canonical = `${siteUrl}/properties/${property.slug}`;
@@ -174,7 +174,7 @@ export default function PropertyDetailPage() {
       <div className="hidden print:block px-8 py-6 border-b border-gray-200 mb-6">
         <h1 className="text-2xl font-bold">{property.name}</h1>
         <p className="text-gray-500 text-sm mt-1">{property.location} • {formatPriceLabel(property.price)}</p>
-        <p className="text-gray-400 text-xs mt-1">chennaicityplots.com/properties/{property.slug}</p>
+        <p className="text-gray-400 text-xs mt-1">madrascityplots.com/properties/{property.slug}</p>
       </div>
 
       <section className="max-w-7xl mx-auto px-5 md:px-8">

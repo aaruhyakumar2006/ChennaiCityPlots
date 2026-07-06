@@ -20,7 +20,7 @@ interface LeadForAI {
 }
 
 // ── Groq AI system prompt ─────────────────────────────────────────────────────
-const AI_SYSTEM = `You are an expert real estate business analyst for Chennai City Plots, a Chennai plot broker.
+const AI_SYSTEM = `You are an expert real estate business analyst for Madras City Plots, a Chennai plot broker.
 Analyse the provided data and give a concise, actionable business intelligence report.
 Format your response with these exact sections (use emoji headers):
 📊 Overview (2 sentences max)

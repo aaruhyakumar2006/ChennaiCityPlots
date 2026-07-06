@@ -48,7 +48,7 @@ export default function LoginPage() {
             <HomeIcon className="w-5 h-5 text-white" />
           </span>
           <span className="font-display font-bold text-lg text-white">
-            chennaicityplots <span className="text-accent">Homes</span>
+            madrascityplots <span className="text-accent">Homes</span>
           </span>
         </Link>
         <div className="bg-white rounded-2xl shadow-2xl p-8">
@@ -66,7 +66,7 @@ export default function LoginPage() {
                 required
                 name="email"
                 type="email"
-                placeholder="admin@chennaicityplotshomes.com"
+                placeholder="admin@madrascityplotshomes.com"
                 className="w-full px-3.5 py-2.5 rounded-xl border border-line text-sm focus:border-accent focus:outline-none"
               />
             </div>

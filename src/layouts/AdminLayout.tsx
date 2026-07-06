@@ -1,12 +1,13 @@
 import { Outlet, Link, useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { Home as HomeIcon, LayoutDashboard, Building2, Users, CalendarDays, LogOut, MessageSquareQuote, HardHat } from "lucide-react";
+import { Home as HomeIcon, LayoutDashboard, Building2, Users, CalendarDays, LogOut, MessageSquareQuote, HardHat, UserCheck } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
 const NAV = [
   { href: "/admin", label: "Overview", icon: LayoutDashboard },
   { href: "/admin/properties", label: "Properties", icon: Building2 },
   { href: "/admin/leads", label: "Leads", icon: Users, badge: true },
+  { href: "/admin/users", label: "Users", icon: UserCheck },
   { href: "/admin/visits", label: "Site Visits", icon: CalendarDays },
   { href: "/admin/testimonials", label: "Reviews", icon: MessageSquareQuote },
   { href: "/admin/builders", label: "Builders", icon: HardHat },
@@ -41,7 +42,7 @@ export default function AdminLayout() {
             <HomeIcon className="w-4 h-4 text-white" />
           </span>
           <span className="font-display font-semibold text-white text-sm leading-tight">
-            Chennai City Plots
+            Madras City Plots
             <br />
             <span className="text-[11px] text-gray-400 font-normal">Admin Dashboard</span>
           </span>

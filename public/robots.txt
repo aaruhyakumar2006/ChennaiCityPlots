@@ -1,5 +1,5 @@
 User-agent: *
 Allow: /
 Disallow: /admin/
-Sitemap: https://chennaicityplots.com/sitemap.xml
+Sitemap: https://madrascityplots.com/sitemap.xml
 

@@ -249,3 +249,41 @@ CREATE POLICY "Admins can delete leads"        ON leads            FOR DELETE US
 CREATE POLICY "Admins can read visits"         ON site_visits      FOR SELECT USING (auth.role() = 'authenticated');
 CREATE POLICY "Admins can update visits"       ON site_visits      FOR UPDATE USING (auth.role() = 'authenticated');
 CREATE POLICY "Admins can delete visits"       ON site_visits      FOR DELETE USING (auth.role() = 'authenticated');
+
+-- ============================================================
+-- RPC Functions
+-- ============================================================
+
+-- Function to retrieve registered users for the admin panel
+CREATE OR REPLACE FUNCTION get_users_list()
+RETURNS TABLE (
+  id UUID,
+  email VARCHAR,
+  full_name TEXT,
+  mobile TEXT,
+  created_at TIMESTAMPTZ,
+  last_sign_in_at TIMESTAMPTZ
+)
+SECURITY DEFINER
+SET search_path = public
+AS $$
+BEGIN
+  IF auth.role() != 'authenticated' THEN
+    RAISE EXCEPTION 'Not authorized';
+  END IF;
+
+  RETURN QUERY
+  SELECT 
+    u.id,
+    u.email,
+    COALESCE(u.raw_user_meta_data->>'full_name', ''),
+    COALESCE(u.raw_user_meta_data->>'mobile', ''),
+    u.created_at,
+    u.last_sign_in_at
+  FROM auth.users u
+  ORDER BY u.created_at DESC;
+END;
+$$ LANGUAGE plpgsql;
+
+GRANT EXECUTE ON FUNCTION get_users_list() TO authenticated;
+

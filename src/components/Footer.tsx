@@ -49,7 +49,7 @@ export default function Footer() {
             <span className="w-9 h-9 rounded-xl2 seal flex items-center justify-center">
               <HomeIcon className="w-5 h-5 text-white" />
             </span>
-            <span className="font-display font-bold text-lg text-white">Chennai City Plots</span>
+            <span className="font-display font-bold text-lg text-white">Madras City Plots</span>
           </div>
           <p className="text-sm leading-relaxed text-gray-400">
             Chennai's trusted plot broker — CMDA &amp; DTCP approved plots across all major localities.
@@ -117,7 +117,7 @@ export default function Footer() {
             </li>
             <li className="flex gap-2">
               <Mail className="w-4 h-4 mt-0.5 shrink-0 text-accent" />
-              homesChennai City Plots@gmail.com
+              homesMadras City Plots@gmail.com
             </li>
           </ul>
           <div className="mt-5">
@@ -128,7 +128,7 @@ export default function Footer() {
 
 
       <div className="border-t border-white/10 py-5 text-center text-xs text-gray-500">
-        © {new Date().getFullYear()} Chennai City Plots. All rights reserved. · DTCP &amp; CMDA Approved Plot Broker, Chennai.
+        © {new Date().getFullYear()} Madras City Plots. All rights reserved. · DTCP &amp; CMDA Approved Plot Broker, Chennai.
       </div>
     </footer>
   );

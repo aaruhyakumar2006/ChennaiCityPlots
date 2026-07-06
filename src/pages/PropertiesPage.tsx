@@ -101,9 +101,9 @@ export default function PropertiesPage() {
   return (
     <>
       <Helmet>
-        <title>Properties — Chennai City Plots</title>
+        <title>Properties — Madras City Plots</title>
         <meta name="description" content="Explore our curated listings of residential and commercial properties across Chennai." />
-        <meta property="og:title" content="Properties — Chennai City Plots" />
+        <meta property="og:title" content="Properties — Madras City Plots" />
         <meta property="og:description" content="Explore our curated listings of residential and commercial properties across Chennai." />
         <meta property="og:type" content="website" />
       </Helmet>

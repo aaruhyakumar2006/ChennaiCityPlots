@@ -24,7 +24,7 @@ function OfficeMap() {
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution: '© <a href="https://www.openstreetmap.org/copyright">OSM</a>',
     }).addTo(map);
-    L.marker(OFFICE).addTo(map).bindPopup("Chennai City Plots").openPopup();
+    L.marker(OFFICE).addTo(map).bindPopup("Madras City Plots").openPopup();
     setTimeout(() => map.invalidateSize(), 100);
     return () => { map.remove(); mapRef.current = null; };
   }, []);
@@ -52,8 +52,8 @@ const CONTACT_INFO = [
   {
     icon: Mail,
     label: "Email",
-    value: "homesChennai City Plots@gmail.com",
-    href: "mailto:homesChennai City Plots@gmail.com",
+    value: "homesMadras City Plots@gmail.com",
+    href: "mailto:homesMadras City Plots@gmail.com",
   },
   {
     icon: Clock,

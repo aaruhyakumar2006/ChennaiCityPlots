@@ -139,10 +139,10 @@ export default function HomePage() {
   return (
     <>
       <Helmet>
-        <title>Chennai City Plots — Premium Real Estate in Chennai</title>
-        <meta name="description" content="Find your dream home in Chennai with Chennai City Plots. Browse premium residential and commercial properties." />
-        <meta property="og:title" content="Chennai City Plots — Premium Real Estate in Chennai" />
-        <meta property="og:description" content="Find your dream home in Chennai with Chennai City Plots. Browse premium residential and commercial properties." />
+        <title>Madras City Plots — Premium Real Estate in Chennai</title>
+        <meta name="description" content="Find your dream home in Chennai with Madras City Plots. Browse premium residential and commercial properties." />
+        <meta property="og:title" content="Madras City Plots — Premium Real Estate in Chennai" />
+        <meta property="og:description" content="Find your dream home in Chennai with Madras City Plots. Browse premium residential and commercial properties." />
         <meta property="og:type" content="website" />
       </Helmet>
 

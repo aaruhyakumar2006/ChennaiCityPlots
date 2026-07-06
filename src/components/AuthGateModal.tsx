@@ -98,7 +98,7 @@ export default function AuthGateModal() {
           <h2 className="font-display font-bold text-xl mb-1">
             {mode === "otp_sent" ? "Enter your code"
               : mode === "login" ? "Welcome back"
-              : "Join Chennai City Plots"}
+              : "Join Madras City Plots"}
           </h2>
           <p className="text-sm text-muted">
             {gateReason || (mode === "signup"

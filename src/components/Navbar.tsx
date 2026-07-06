@@ -55,7 +55,7 @@ export default function Navbar() {
             <HomeIcon className="w-5 h-5 text-white" strokeWidth={2} />
           </span>
           <span className="font-display font-bold text-lg tracking-tight">
-            Chennai City <span className="text-accent">Plots</span>
+            Madras City <span className="text-accent">Plots</span>
           </span>
         </Link>
 
@@ -144,7 +144,7 @@ export default function Navbar() {
                   <span className="w-8 h-8 rounded-xl seal flex items-center justify-center">
                     <HomeIcon className="w-4 h-4 text-white" />
                   </span>
-                  <span className="font-display font-bold text-white text-sm">Chennai City Plots</span>
+                  <span className="font-display font-bold text-white text-sm">Madras City Plots</span>
                 </div>
                 <button onClick={() => setOpen(false)} aria-label="Close menu"
                   className="w-9 h-9 rounded-xl bg-white/10 flex items-center justify-center hover:bg-white/20 transition">

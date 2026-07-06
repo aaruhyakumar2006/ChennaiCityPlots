@@ -40,7 +40,7 @@ function loadEnv() {
 const env = loadEnv();
 const SUPABASE_URL      = env.VITE_SUPABASE_URL;
 const SUPABASE_ANON_KEY = env.VITE_SUPABASE_ANON_KEY;
-const SITE_URL          = env.VITE_SITE_URL ?? "https://chennaicityplots.com";
+const SITE_URL          = env.VITE_SITE_URL ?? "https://madrascityplots.com";
 
 if (!SUPABASE_URL || SUPABASE_URL.includes("YOUR_PROJECT_ID")) {
   console.error("❌  Set VITE_SUPABASE_URL in .env before generating sitemap.");

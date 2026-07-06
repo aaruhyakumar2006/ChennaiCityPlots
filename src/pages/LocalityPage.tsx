@@ -54,9 +54,9 @@ export default function LocalityPage() {
           });
         }
         setLoading(false);
-        document.title = `Properties in ${areaLabel} | Chennai City Plots`;
+        document.title = `Properties in ${areaLabel} | Madras City Plots`;
       });
-    return () => { document.title = "Chennai City Plots — Premium Real Estate in Chennai"; };
+    return () => { document.title = "Madras City Plots — Premium Real Estate in Chennai"; };
   }, [area]);
 
   return (
