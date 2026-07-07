@@ -137,7 +137,7 @@ export default function AuthGateModal() {
     if (err) { setError(err.message); return; }
     if (isAdminEmail(data.session?.user.email)) {
       closeGate();
-      navigate("/admin");
+      navigate("/admin", { replace: true });
       return;
     }
     closeGate();
@@ -291,6 +291,10 @@ export default function AuthGateModal() {
                 <button type="submit" disabled={loading} className={btnCls} style={btnStyle}>
                   {loading ? <><Loader2 className="w-4 h-4 animate-spin" /> Signing in…</> : "Sign In →"}
                 </button>
+                <p className="text-[11px] text-center text-slate-400 pt-1 flex items-center justify-center gap-1">
+                  <ShieldCheck className="w-3 h-3 text-slate-300" />
+                  Admin? Sign in with your admin email to access the dashboard.
+                </p>
               </form>
             )}
 

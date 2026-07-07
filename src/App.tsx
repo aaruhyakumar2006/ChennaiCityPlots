@@ -108,7 +108,7 @@ export default function App() {
     <AuthProvider>
       <UserAuthProvider>
       <PageContextProvider>
-      <BrowserRouter>
+      <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
         <Suspense fallback={<PageSkeleton />}>
           <Routes>
             {/* Public site routes */}
