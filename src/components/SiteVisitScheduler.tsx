@@ -25,15 +25,15 @@ export default function SiteVisitScheduler({ propertyId }: { propertyId: string 
 
   if (status === "done") {
     return (
-      <div className="rounded-2xl border border-emerald-200 bg-gradient-to-br from-emerald-50 to-teal-50 p-7 text-center shadow-sm">
-        <div className="w-14 h-14 rounded-full bg-emerald-100 flex items-center justify-center mx-auto mb-4">
-          <CheckCircle2 className="w-7 h-7 text-emerald-600" />
+      <div className="rounded-2xl border border-blue-200 bg-gradient-to-br from-blue-50 to-indigo-50 p-7 text-center shadow-sm">
+        <div className="w-14 h-14 rounded-full bg-blue-100 flex items-center justify-center mx-auto mb-4">
+          <CheckCircle2 className="w-7 h-7 text-blue-600" />
         </div>
-        <p className="font-display font-bold text-lg mb-1 text-emerald-950">Visit Requested!</p>
-        <p className="text-sm text-emerald-700/80 mb-1">
+        <p className="font-display font-bold text-lg mb-1 text-blue-950">Visit Requested!</p>
+        <p className="text-sm text-blue-700/80 mb-1">
           <span className="font-semibold">{formatDateShort(date)}</span> at <span className="font-semibold">{slot}</span>
         </p>
-        <p className="text-xs text-emerald-600/70">Our team will confirm your visit shortly.</p>
+        <p className="text-xs text-blue-600/70">Our team will confirm your visit shortly.</p>
       </div>
     );
   }
@@ -44,13 +44,13 @@ export default function SiteVisitScheduler({ propertyId }: { propertyId: string 
     <div className="rounded-2xl border border-line bg-white shadow-soft overflow-hidden">
       {/* Header */}
       <div className="px-6 py-4 flex items-center gap-3"
-        style={{ background: "linear-gradient(135deg, #0D2050 0%, #0F5244 100%)" }}>
+        style={{ background: "linear-gradient(135deg, #1D4ED8 0%, #1E3A8A 100%)" }}>
         <div className="w-9 h-9 rounded-xl bg-white/10 flex items-center justify-center shrink-0">
           <CalendarDays className="w-4 h-4 text-white" />
         </div>
         <div>
           <h3 className="font-display font-bold text-white text-base leading-tight">Schedule a Site Visit</h3>
-          <p className="text-emerald-300 text-xs">Free guided visit with our team</p>
+          <p className="text-blue-200 text-xs">Free guided visit with our team</p>
         </div>
       </div>
 
@@ -107,10 +107,10 @@ export default function SiteVisitScheduler({ propertyId }: { propertyId: string 
           className="w-full py-3.5 rounded-xl font-semibold text-sm disabled:opacity-60 flex items-center justify-center gap-2 transition-all"
           style={{
             background: slot && date && name
-              ? "linear-gradient(135deg, #0D2050 0%, #0F5244 100%)"
+              ? "linear-gradient(135deg, #1D4ED8 0%, #1E3A8A 100%)"
               : "#E2E8F0",
             color: slot && date && name ? "white" : "#94A3B8",
-            boxShadow: slot && date && name ? "0 4px 16px rgba(15, 82, 68,0.3)" : "none",
+            boxShadow: slot && date && name ? "0 4px 16px rgba(29,78,216,0.3)" : "none",
           }}>
           {status === "loading"
             ? <><Loader2 className="w-4 h-4 animate-spin" /> Submitting…</>

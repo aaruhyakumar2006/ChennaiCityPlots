@@ -11,18 +11,18 @@ const config: Config = {
       colors: {
         surface: "#F4F6FB",
         accent: {
-          DEFAULT: "#0F5244",   // sophisticated pine/emerald green
-          50:  "#ECFDF5",
-          100: "#D1FAE5",
-          200: "#A7F3D0",
-          400: "#34D399",
-          500: "#10B981",       // vibrant emerald
-          600: "#0F5244",       // primary dark emerald
-          700: "#064E3B",
-          900: "#022C22",
+          DEFAULT: "#1D4ED8",   // premium royal blue
+          50:  "#EFF6FF",
+          100: "#DBEAFE",
+          200: "#BFDBFE",
+          400: "#60A5FA",
+          500: "#3B82F6",       // vibrant blue
+          600: "#1D4ED8",       // primary dark blue
+          700: "#1E3A8A",
+          900: "#1E2D6B",
         },
         gold: {
-          DEFAULT: "#D4AF37",   // refined champagne gold
+          DEFAULT: "#D4AF37",
           50:  "#FAF8F0",
           100: "#F5ECD2",
           400: "#E5C158",
@@ -35,9 +35,9 @@ const config: Config = {
           600: "#374151",
         },
         muted: "#64748B",
-        ok:   "#059669",
+        ok:   "#2563EB",
         line: "#E2E8F0",
-        navy: "#0B1210",        // very dark pine charcoal
+        navy: "#0F172A",
       },
       fontFamily: {
         display: ["Poppins", "sans-serif"],
@@ -49,14 +49,14 @@ const config: Config = {
       },
       boxShadow: {
         card:     "0 1px 3px rgba(10,22,40,0.06), 0 1px 2px rgba(10,22,40,0.04)",
-        cardHover:"0 20px 48px -12px rgba(15,82,68,0.22)",
+        cardHover:"0 20px 48px -12px rgba(29,78,216,0.22)",
         soft:     "0 8px 32px rgba(10,22,40,0.08)",
-        glow:     "0 0 40px rgba(15,82,68,0.35)",
+        glow:     "0 0 40px rgba(29,78,216,0.35)",
         "glow-gold": "0 0 32px rgba(212,175,55,0.4)",
       },
       backgroundImage: {
-        "hero-gradient": "linear-gradient(135deg, #050E0C 0%, #0A1412 40%, #0F2621 70%, #050E0C 100%)",
-        "accent-gradient": "linear-gradient(135deg, #0F5244 0%, #166534 100%)",
+        "hero-gradient": "linear-gradient(135deg, #060B18 0%, #0D1B3E 40%, #0F2460 70%, #060B18 100%)",
+        "accent-gradient": "linear-gradient(135deg, #1D4ED8 0%, #1E3A8A 100%)",
         "gold-gradient": "linear-gradient(135deg, #D4AF37 0%, #E5C158 100%)",
         "card-gradient": "linear-gradient(145deg, #FFFFFF 0%, #F4F6FB 100%)",
       },

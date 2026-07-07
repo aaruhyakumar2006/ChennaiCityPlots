@@ -115,7 +115,7 @@ export default function NaturalSearchBar() {
           onClick={() => search()}
           disabled={loading || !value.trim()}
           className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold text-white transition disabled:opacity-50 hover:opacity-90"
-          style={{ background: "linear-gradient(135deg, #0F5244 0%, #166534 100%)" }}>
+          style={{ background: "linear-gradient(135deg, #1D4ED8 0%, #1E3A8A 100%)" }}>
           {loading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <ArrowRight className="w-3.5 h-3.5" />}
           {loading ? "Thinking…" : "Search"}
         </button>

@@ -6,10 +6,10 @@
   :root {
     --font-inter: "Inter", sans-serif;
     --font-poppins: "Poppins", sans-serif;
-    --accent: #0F5244;
-    --accent-light: #166534;
+    --accent: #1D4ED8;
+    --accent-light: #2563EB;
     --gold: #D4AF37;
-    --navy: #0B1210;
+    --navy: #0F172A;
   }
   body {
     @apply bg-white text-ink antialiased;
@@ -30,8 +30,8 @@
 
 /* ── Logo seal ───────────────────────────────────────── */
 .seal {
-  background: linear-gradient(135deg, #0F5244 0%, #166534 100%);
-  box-shadow: 0 4px 14px rgba(15,82,68,0.4);
+  background: linear-gradient(135deg, #1D4ED8 0%, #1E3A8A 100%);
+  box-shadow: 0 4px 14px rgba(29,78,216,0.4);
 }
 
 /* ── General fade-in ─────────────────────────────────── */
@@ -101,12 +101,12 @@
 .aurora-bg {
   background: linear-gradient(
     -45deg,
-    #050E0C,
-    #0A1412,
-    #0F2621,
-    #0A1412,
-    #0C1F1A,
-    #050E0C
+    #060B18,
+    #0D1B3E,
+    #0F2460,
+    #0D1B3E,
+    #091530,
+    #060B18
   );
   background-size: 400% 400%;
   animation: auroraShift 12s ease infinite;
@@ -151,6 +151,9 @@
   z-index: -1;
   opacity: 0;
   transition: opacity 0.3s;
+}
+.cta-glow::before {
+  background: linear-gradient(90deg, #1D4ED8, #3B82F6, #D4AF37, #1D4ED8);
 }
 .cta-glow:hover::before { opacity: 1; }
 @keyframes borderFlow {
@@ -239,7 +242,7 @@
   outline: none;
   color: #0D1117;
 }
-.input-float:focus { border-color: #0F5244; }
+.input-float:focus { border-color: #1D4ED8; }
 .input-float-label {
   position: absolute;
   left: 16px;
@@ -256,7 +259,7 @@
   transform: translateY(0);
   font-size: 0.7rem;
   font-weight: 600;
-  color: #0F5244;
+  color: #1D4ED8;
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
@@ -275,7 +278,7 @@
   top: 8px;
   font-size: 0.7rem;
   font-weight: 600;
-  color: #0F5244;
+  color: #1D4ED8;
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
@@ -292,7 +295,7 @@
   min-height: 100px;
   color: #0D1117;
 }
-.input-float-ta:focus { border-color: #0F5244; }
+.input-float-ta:focus { border-color: #1D4ED8; }
 
 /* ── Print styles ────────────────────────────────────── */
 @media print {
@@ -313,8 +316,8 @@
 /* ── badge pulse ─────────────────────────────────────── */
 .badge-pulse { animation: badgePulse 2.5s ease-in-out infinite; }
 @keyframes badgePulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(15,82,68,0.3); }
-  50%       { box-shadow: 0 0 0 10px rgba(15,82,68,0); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(29,78,216,0.3); }
+  50%       { box-shadow: 0 0 0 10px rgba(29,78,216,0); }
 }
 
 /* ── Scroll indicator dot ────────────────────────────── */

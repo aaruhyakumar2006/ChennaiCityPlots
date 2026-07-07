@@ -117,7 +117,7 @@ export default function Footer() {
             </li>
             <li className="flex gap-2">
               <Mail className="w-4 h-4 mt-0.5 shrink-0 text-accent" />
-              homesMadras City Plots@gmail.com
+              <a href="mailto:madrascityplot@gmail.com" className="hover:text-accent transition">madrascityplot@gmail.com</a>
             </li>
           </ul>
           <div className="mt-5">

@@ -38,25 +38,29 @@ export default function InquiryForm({ propertyId }: { propertyId: string }) {
     const data = Object.fromEntries(new FormData(form).entries()) as {
       name: string; mobile: string; email: string; message?: string;
     };
-    const { error } = await (supabase.from("leads") as ReturnType<typeof supabase.from>).insert({
+    const { data: lead, error } = await (supabase.from("leads") as ReturnType<typeof supabase.from>).insert({
       name: data.name, mobile: data.mobile, email: data.email,
       message: data.message || null, property_id: propertyId, status: "NEW",
-    } as never);
+    } as never).select().single();
     if (error) { setStatus("error"); setErrorMsg(error.message); return; }
+
+    // Fire-and-forget — notify admin via Edge Function
+    supabase.functions.invoke("notify-lead", { body: { record: lead } }).catch(() => {});
+
     setStatus("done");
     form.reset();
   }
 
   if (status === "done") {
     return (
-      <div className="rounded-2xl border border-green-200 bg-gradient-to-br from-green-50 to-emerald-50 p-7 text-center shadow-sm">
-        <div className="w-14 h-14 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-4">
-          <CheckCircle2 className="w-7 h-7 text-green-500" />
+      <div className="rounded-2xl border border-blue-200 bg-gradient-to-br from-blue-50 to-indigo-50 p-7 text-center shadow-sm">
+        <div className="w-14 h-14 rounded-full bg-blue-100 flex items-center justify-center mx-auto mb-4">
+          <CheckCircle2 className="w-7 h-7 text-blue-500" />
         </div>
-        <p className="font-display font-bold text-lg mb-1 text-green-800">Enquiry Submitted!</p>
-        <p className="text-sm text-green-700/80 mb-5">Our relationship manager will call you within 24 hours.</p>
+        <p className="font-display font-bold text-lg mb-1 text-blue-800">Enquiry Submitted!</p>
+        <p className="text-sm text-blue-700/80 mb-5">Our relationship manager will call you within 24 hours.</p>
         <button onClick={() => setStatus("idle")}
-          className="text-sm font-semibold text-green-700 hover:text-green-800 underline underline-offset-2">
+          className="text-sm font-semibold text-blue-700 hover:text-blue-800 underline underline-offset-2">
           Submit another enquiry
         </button>
       </div>
@@ -66,9 +70,9 @@ export default function InquiryForm({ propertyId }: { propertyId: string }) {
   return (
     <div className="rounded-2xl border border-line bg-white shadow-soft overflow-hidden">
       {/* Header strip */}
-      <div className="px-6 py-4" style={{ background: "linear-gradient(135deg, #0F5244 0%, #166534 100%)" }}>
+      <div className="px-6 py-4" style={{ background: "linear-gradient(135deg, #1D4ED8 0%, #1E3A8A 100%)" }}>
         <h3 className="font-display font-bold text-white text-base mb-0.5">Interested in this property?</h3>
-        <p className="text-emerald-200 text-xs">Get a free callback within 24 hours</p>
+        <p className="text-blue-200 text-xs">Get a free callback within 24 hours</p>
       </div>
 
       <form onSubmit={handleSubmit} className="p-5 space-y-3">
@@ -91,7 +95,7 @@ export default function InquiryForm({ propertyId }: { propertyId: string }) {
 
         <button type="submit" disabled={status === "loading"}
           className="w-full py-3.5 rounded-xl text-white font-semibold text-sm disabled:opacity-60 flex items-center justify-center gap-2 transition hover:opacity-90"
-          style={{ background: "linear-gradient(135deg, #0F5244 0%, #166534 100%)", boxShadow: "0 4px 16px rgba(15, 82, 68,0.35)" }}>
+          style={{ background: "linear-gradient(135deg, #1D4ED8 0%, #1E3A8A 100%)", boxShadow: "0 4px 16px rgba(29,78,216,0.35)" }}>
           {status === "loading"
             ? <><Loader2 className="w-4 h-4 animate-spin" /> Sending…</>
             : <><Send className="w-4 h-4" /> Send Enquiry</>}

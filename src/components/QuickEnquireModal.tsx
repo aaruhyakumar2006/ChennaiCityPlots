@@ -33,12 +33,16 @@ export default function QuickEnquireModal({ propertyId, propertyName, onClose }:
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault(); setError(""); setStatus("loading");
     const fd = new FormData(e.currentTarget);
-    const { error: err } = await (supabase.from("leads") as ReturnType<typeof supabase.from>).insert({
+    const { data: lead, error: err } = await (supabase.from("leads") as ReturnType<typeof supabase.from>).insert({
       name: fd.get("name") as string, mobile: fd.get("mobile") as string,
       email: fd.get("email") as string, message: `Quick enquiry for: ${propertyName}`,
       property_id: propertyId, status: "NEW",
-    } as never);
+    } as never).select().single();
     if (err) { setError(err.message); setStatus("idle"); return; }
+
+    // Fire-and-forget — notify admin
+    supabase.functions.invoke("notify-lead", { body: { record: lead } }).catch(() => {});
+
     setStatus("done");
   }
 
@@ -49,10 +53,10 @@ export default function QuickEnquireModal({ propertyId, propertyName, onClose }:
 
         {/* Header */}
         <div className="px-6 py-4 flex items-center justify-between"
-          style={{ background: "linear-gradient(135deg, #0F5244 0%, #166534 100%)" }}>
+          style={{ background: "linear-gradient(135deg, #1D4ED8 0%, #1E3A8A 100%)" }}>
           <div>
             <p className="font-display font-bold text-white text-sm">Quick Enquiry</p>
-            <p className="text-emerald-200 text-xs line-clamp-1 mt-0.5">{propertyName}</p>
+            <p className="text-blue-200 text-xs line-clamp-1 mt-0.5">{propertyName}</p>
           </div>
           <button onClick={onClose} aria-label="Close"
             className="w-8 h-8 rounded-full bg-white/15 hover:bg-white/25 flex items-center justify-center transition">
@@ -63,8 +67,8 @@ export default function QuickEnquireModal({ propertyId, propertyName, onClose }:
         <div className="px-6 py-5">
           {status === "done" ? (
             <div className="text-center py-6">
-              <div className="w-14 h-14 rounded-full bg-green-50 flex items-center justify-center mx-auto mb-4">
-                <CheckCircle2 className="w-7 h-7 text-green-500" />
+              <div className="w-14 h-14 rounded-full bg-blue-50 flex items-center justify-center mx-auto mb-4">
+                <CheckCircle2 className="w-7 h-7 text-blue-500" />
               </div>
               <p className="font-display font-bold text-base mb-1">Enquiry Sent!</p>
               <p className="text-sm text-muted mb-5">We'll call you within 24 hours.</p>
@@ -81,7 +85,7 @@ export default function QuickEnquireModal({ propertyId, propertyName, onClose }:
               {error && <p className="text-xs text-red-600 bg-red-50 border border-red-200 rounded-xl px-3 py-2">{error}</p>}
               <button type="submit" disabled={status === "loading"}
                 className="w-full py-3.5 rounded-xl text-white font-semibold text-sm disabled:opacity-60 flex items-center justify-center gap-2 transition hover:opacity-90"
-                style={{ background: "linear-gradient(135deg, #0F5244 0%, #166534 100%)", boxShadow: "0 4px 16px rgba(15, 82, 68,0.3)" }}>
+                style={{ background: "linear-gradient(135deg, #1D4ED8 0%, #1E3A8A 100%)", boxShadow: "0 4px 16px rgba(29,78,216,0.3)" }}>
                 {status === "loading" ? <><Loader2 className="w-4 h-4 animate-spin" /> Sending…</> : <><Send className="w-4 h-4" /> Send Enquiry</>}
               </button>
               <p className="text-[11px] text-slate-400 text-center">🔒 100% confidential</p>

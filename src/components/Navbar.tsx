@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { Home as HomeIcon, Menu, X, Heart, Moon, Sun, LogOut, UserCircle2 } from "lucide-react";
+import { Home as HomeIcon, Menu, X, Heart, LogOut, UserCircle2 } from "lucide-react";
 import { useWishlist } from "@/lib/useWishlist";
 import { useUserAuth } from "@/lib/useUserAuth";
 
@@ -14,23 +14,9 @@ const navLinks = [
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [dark, setDark] = useState(() => document.documentElement.classList.contains("dark"));
   const { pathname } = useLocation();
   const { count: wishlistCount } = useWishlist();
   const { user, openGate, signOut } = useUserAuth();
-
-  function toggleDark() {
-    const next = !dark;
-    setDark(next);
-    document.documentElement.classList.toggle("dark", next);
-    localStorage.setItem("pdh_theme", next ? "dark" : "light");
-  }
-
-  // Restore persisted theme on mount
-  useEffect(() => {
-    const saved = localStorage.getItem("pdh_theme");
-    if (saved === "dark") { document.documentElement.classList.add("dark"); setDark(true); }
-  }, []);
 
   // Close mobile menu on route change
   useEffect(() => { setOpen(false); }, [pathname]);
@@ -79,13 +65,6 @@ export default function Navbar() {
         </nav>
 
         <div className="hidden lg:flex items-center gap-3">
-          <button
-            onClick={toggleDark}
-            aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
-            className="w-9 h-9 rounded-xl2 border border-line flex items-center justify-center text-ink-700 hover:border-accent hover:text-accent transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-          >
-            {dark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-          </button>
           <Link
             to="/saved"
             aria-label={`View saved plots (${wishlistCount})`}
@@ -181,7 +160,7 @@ export default function Navbar() {
                 </Link>
                 <Link to="/properties" onClick={() => setOpen(false)}
                   className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl text-sm font-bold text-white transition hover:opacity-90"
-                  style={{ background: "linear-gradient(135deg, #0F5244 0%, #166534 100%)" }}>
+                  style={{ background: "linear-gradient(135deg, #1D4ED8 0%, #1E3A8A 100%)" }}>
                   Browse Plots
                 </Link>
               </div>
