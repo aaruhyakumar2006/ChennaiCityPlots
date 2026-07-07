@@ -116,25 +116,24 @@ export default function HomePage() {
   const [happyBuyers, setHappyBuyers] = useState(0);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    async function load() {
-      const [featuredRes, countRes, leadsRes] = await Promise.all([
-        supabase
-          .from("properties")
-          .select("id, property_id, name, slug, type, status, location, price, area_min, area_max, plot_size_sqft, facing, configuration, description, views, property_images(url, sort_order)")
-          .eq("featured", true)
-          .order("created_at", { ascending: false })
-          .limit(6),
-        supabase.from("properties").select("id", { count: "exact", head: true }),
-        supabase.from("leads").select("id", { count: "exact", head: true }).eq("status", "CONVERTED"),
-      ]);
-      setFeatured((featuredRes.data as PropertyCardData[]) ?? []);
-      setTotalCount(countRes.count ?? 0);
-      setHappyBuyers(leadsRes.count ?? 0);
-      setLoading(false);
-    }
-    load();
-  }, []);
+  async function load() {
+    const [featuredRes, countRes, leadsRes] = await Promise.all([
+      supabase
+        .from("properties")
+        .select("id, property_id, name, slug, type, status, location, price, area_min, area_max, plot_size_sqft, facing, configuration, description, views, property_images(url, sort_order)")
+        .eq("featured", true)
+        .order("created_at", { ascending: false })
+        .limit(6),
+      supabase.from("properties").select("id", { count: "exact", head: true }),
+      supabase.from("leads").select("id", { count: "exact", head: true }).eq("status", "CONVERTED"),
+    ]);
+    setFeatured((featuredRes.data as PropertyCardData[]) ?? []);
+    setTotalCount(countRes.count ?? 0);
+    setHappyBuyers(leadsRes.count ?? 0);
+    setLoading(false);
+  }
+
+  useEffect(() => { load(); }, []);
 
   // ── Realtime: update featured when admin changes properties ──
   useEffect(() => {
