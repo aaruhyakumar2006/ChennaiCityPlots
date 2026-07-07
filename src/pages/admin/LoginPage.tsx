@@ -3,7 +3,7 @@ import { useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { useNavigate } from "react-router-dom";
 import { Home as HomeIcon } from "lucide-react";
-import { useAuth } from "@/App";
+import { useAuth, isAdminEmail } from "@/App";
 import { useEffect } from "react";
 
 export default function LoginPage() {
@@ -25,6 +25,12 @@ export default function LoginPage() {
       email: string;
       password: string;
     };
+
+    if (!isAdminEmail(data.email)) {
+      setError("Access denied. This account is not authorised as admin.");
+      setSubmitting(false);
+      return;
+    }
 
     const { error: authError } = await supabase.auth.signInWithPassword({
       email: data.email,

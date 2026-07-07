@@ -78,11 +78,23 @@ function PageSkeleton() {
   );
 }
 
+// ── Admin email whitelist ────────────────────────────────────────────────────
+const ADMIN_EMAILS = (import.meta.env.VITE_ADMIN_EMAILS ?? "")
+  .split(",")
+  .map((e: string) => e.trim().toLowerCase())
+  .filter(Boolean);
+
+export function isAdminEmail(email: string | undefined) {
+  if (!email) return false;
+  return ADMIN_EMAILS.includes(email.toLowerCase());
+}
+
 // ── Protected route guard ───────────────────────────────────────────────────
 function RequireAuth({ children }: { children: React.ReactNode }) {
   const { session, loading } = useAuth();
   if (loading) return <PageSkeleton />;
   if (!session) return <Navigate to="/admin/login" replace />;
+  if (!isAdminEmail(session.user.email)) return <Navigate to="/" replace />;
   return <>{children}</>;
 }
 
