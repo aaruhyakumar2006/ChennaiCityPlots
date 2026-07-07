@@ -4,7 +4,6 @@ import { Home as HomeIcon, MapPin, Phone, Mail, Facebook, Instagram } from "luci
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
-// Fix Leaflet icon paths in Vite
 delete (L.Icon.Default.prototype as any)._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
@@ -56,10 +55,15 @@ export default function Footer() {
             Transparent pricing, legal assistance and end-to-end support.
           </p>
           <div className="flex gap-3 mt-5">
-            {[Facebook, Instagram].map((Icon, i) => (
+            {[
+              { Icon: Facebook, href: "https://www.facebook.com/profile.php?id=61591524131528" },
+              { Icon: Instagram, href: "https://www.instagram.com/madrascityhousing_?igsh=MWJoY2pqaGg1OWNxbA==" },
+            ].map(({ Icon, href }, i) => (
               <a
                 key={i}
-                href="#"
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-accent transition"
               >
                 <Icon className="w-4 h-4" />

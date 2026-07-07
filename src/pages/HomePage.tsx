@@ -20,13 +20,7 @@ const WHY_US = [
   { icon: Headphones, title: "End-to-End Support", desc: "From plot shortlisting to registration — a dedicated relationship manager handles everything." },
 ];
 
-const LOCATION_PINS = [
-  { label: "Schools", x: 22, y: 30 },
-  { label: "Hospitals", x: 68, y: 18 },
-  { label: "Metro", x: 40, y: 62 },
-  { label: "Shopping", x: 80, y: 55 },
-  { label: "Highway Access", x: 15, y: 78 },
-];
+const LOCATION_PINS: never[] = [];
 
 // ── Scroll-reveal hook ────────────────────────────────────────────────────
 function useScrollReveal<T extends HTMLElement>() {
