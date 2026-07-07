@@ -52,8 +52,8 @@ const CONTACT_INFO = [
   {
     icon: Mail,
     label: "Email",
-    value: "homesMadras City Plots@gmail.com",
-    href: "mailto:homesMadras City Plots@gmail.com",
+    value: "madrascityplot@gmail.com",
+    href: "mailto:madrascityplot@gmail.com",
   },
   {
     icon: Clock,
@@ -161,8 +161,8 @@ export default function ContactPage() {
 
             {status === "done" ? (
               <div className="text-center py-12">
-                <div className="w-16 h-16 rounded-full bg-green-50 flex items-center justify-center mx-auto mb-4">
-                  <CheckCircle2 className="w-8 h-8 text-green-500" />
+                <div className="w-16 h-16 rounded-full bg-blue-50 flex items-center justify-center mx-auto mb-4">
+                  <CheckCircle2 className="w-8 h-8 text-blue-500" />
                 </div>
                 <p className="font-display font-bold text-lg mb-1">Message received!</p>
                 <p className="text-sm text-muted mb-5">Our team will call you within 2 hours.</p>

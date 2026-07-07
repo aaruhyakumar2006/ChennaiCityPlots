@@ -2,7 +2,7 @@ interface Props {
   propertyName?: string | null;
 }
 
-const PHONE = "919876543210";
+const PHONE = "916369678465";
 const GENERIC_MSG = "Hi%2C%20I%27m%20interested%20in%20a%20property%20on%20Madras City Plots%20Homes";
 
 export default function WhatsAppFab({ propertyName }: Props) {

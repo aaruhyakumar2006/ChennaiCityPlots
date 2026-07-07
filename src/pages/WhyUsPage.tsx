@@ -3,13 +3,13 @@ import { Link } from "react-router-dom";
 
 const WHY_US = [
   {
-    icon: ShieldCheck, color: "from-accent to-emerald-700",
+    icon: ShieldCheck, color: "from-accent to-blue-700",
     title: "DTCP & CMDA Verified",
     desc: "Every plot is verified for DTCP and CMDA approvals before listing — no illegal layouts, no surprises.",
     points: ["DTCP Approved Layouts", "CMDA Approved Plots", "No Encumbrance", "Clear Title Guarantee"],
   },
   {
-    icon: FileText, color: "from-emerald-500 to-teal-600",
+    icon: FileText, color: "from-blue-500 to-indigo-600",
     title: "Transparent Pricing",
     desc: "No hidden charges. Final price, registration and EC costs are shown upfront — in writing — before you commit.",
     points: ["No Hidden Charges", "Upfront Cost Breakdown", "Registration Assistance", "EC & Legal Fees Clarified"],
@@ -33,7 +33,7 @@ const WHY_US = [
     points: ["Verified Ownership", "Clean Track Record", "No Disputed Lands", "Direct Owner Access"],
   },
   {
-    icon: Headphones, color: "from-teal-500 to-accent",
+    icon: Headphones, color: "from-teal-500 to-blue-600",
     title: "End-to-End Support",
     desc: "From shortlisting to registration, a dedicated relationship manager handles everything for you.",
     points: ["Dedicated RM", "Shortlisting to Registration", "Bank Loan Coordination", "Post-Sale Support"],
@@ -61,10 +61,10 @@ export default function WhyUsPage() {
       {/* Hero */}
       <section className="relative overflow-hidden aurora-bg text-white py-24 px-5 md:px-8">
         <div className="orb w-96 h-96 top-[-8rem] right-[-8rem]"
-          style={{ background: "radial-gradient(circle, rgba(15, 82, 68,0.4) 0%, transparent 70%)" }} />
+          style={{ background: "radial-gradient(circle, rgba(29,78,216,0.4) 0%, transparent 70%)" }} />
         <div className="max-w-7xl mx-auto relative z-10">
-          <p className="text-emerald-400 text-sm font-semibold tracking-widest uppercase mb-4 flex items-center gap-2">
-            <span className="w-6 h-px bg-emerald-400" /> Why Choose Us
+          <p className="text-blue-400 text-sm font-semibold tracking-widest uppercase mb-4 flex items-center gap-2">
+            <span className="w-6 h-px bg-blue-400" /> Why Choose Us
           </p>
           <h1 className="font-display font-black text-3xl md:text-5xl lg:text-6xl leading-tight max-w-3xl mb-6">
             Chennai's most trusted<br />
@@ -88,7 +88,7 @@ export default function WhyUsPage() {
 
           <Link to="/properties"
             className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl font-semibold text-sm text-white transition hover:opacity-90"
-            style={{ background: "linear-gradient(135deg, #0F5244 0%, #166534 100%)", boxShadow: "0 4px 20px rgba(15, 82, 68,0.4)" }}>
+            style={{ background: "linear-gradient(135deg, #1D4ED8 0%, #1E3A8A 100%)", boxShadow: "0 4px 20px rgba(29,78,216,0.4)" }}>
             Browse Plots <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
@@ -134,11 +134,11 @@ export default function WhyUsPage() {
               <div key={p.step} className="relative">
                 {i < PROCESS.length - 1 && (
                   <div className="hidden lg:block absolute top-7 left-full w-full h-0.5 z-0 -translate-x-1/2"
-                    style={{ background: "linear-gradient(90deg, #0F5244, #E2E8F0)" }} />
+                    style={{ background: "linear-gradient(90deg, #1D4ED8, #E2E8F0)" }} />
                 )}
                 <div className="bg-white rounded-2xl border border-line p-5 relative z-10 hover:shadow-md transition-shadow hover:-translate-y-0.5 hover:border-accent/30 duration-200">
                   <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-4 font-display font-black text-sm text-white"
-                    style={{ background: "linear-gradient(135deg, #0F5244 0%, #166534 100%)" }}>
+                    style={{ background: "linear-gradient(135deg, #1D4ED8 0%, #1E3A8A 100%)" }}>
                     {p.step}
                   </div>
                   <h3 className="font-display font-bold text-sm mb-2">{p.title}</h3>
@@ -153,11 +153,11 @@ export default function WhyUsPage() {
       {/* CTA */}
       <section className="max-w-7xl mx-auto px-5 md:px-8 py-16 px-4 md:px-8">
         <div className="rounded-3xl overflow-hidden relative text-white text-center py-16 px-8"
-          style={{ background: "linear-gradient(135deg, #0A1628 0%, #0F5244 50%, #0A1628 100%)" }}>
+          style={{ background: "linear-gradient(135deg, #0A1628 0%, #1D4ED8 50%, #0A1628 100%)" }}>
           <div className="orb w-96 h-96 -top-32 -right-32"
             style={{ background: "radial-gradient(circle, rgba(99,102,241,0.3) 0%, transparent 70%)" }} />
           <div className="relative z-10">
-            <p className="text-emerald-300 text-sm font-semibold uppercase tracking-widest mb-3">Ready to begin?</p>
+            <p className="text-blue-300 text-sm font-semibold uppercase tracking-widest mb-3">Ready to begin?</p>
             <h2 className="font-display font-bold text-2xl md:text-4xl mb-4">Find your perfect plot today</h2>
             <p className="text-slate-400 mb-8 max-w-md mx-auto text-sm">Browse our verified DTCP & CMDA approved plots across Chennai and book a free site visit.</p>
             <div className="flex flex-wrap gap-3 justify-center">

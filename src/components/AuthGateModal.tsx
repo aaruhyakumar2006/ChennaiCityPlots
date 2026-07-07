@@ -62,7 +62,7 @@ function OtpInput({ value, onChange }: { value: string; onChange: (v: string) =>
   }
 
   return (
-    <div className="flex gap-2 justify-center">
+    <div className="flex gap-3 justify-center">
       {Array.from({ length: 6 }).map((_, i) => (
         <input
           key={i}
@@ -72,11 +72,12 @@ function OtpInput({ value, onChange }: { value: string; onChange: (v: string) =>
           onChange={(e) => handleChange(i, e.target.value)}
           onKeyDown={(e) => handleKeyDown(i, e)}
           onPaste={handlePaste}
-          className={`w-11 h-14 text-center text-xl font-bold rounded-xl border-2 outline-none transition-all duration-200
-            ${digits[i]?.trim()
+          className={`w-14 h-16 text-center text-2xl font-bold rounded-xl border-2 outline-none transition-all duration-200
+            ${ digits[i]?.trim()
               ? "border-accent bg-accent/5 text-accent"
               : "border-slate-200 bg-slate-50 text-ink focus:border-accent focus:bg-white"
             }`}
+          style={{ color: digits[i]?.trim() ? undefined : "#0D1117" }}
         />
       ))}
     </div>

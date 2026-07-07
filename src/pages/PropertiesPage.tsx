@@ -90,6 +90,15 @@ export default function PropertiesPage() {
 
   useEffect(() => { load(); }, [load]);
 
+  // ── Realtime: re-fetch when admin inserts/updates/deletes a property ──
+  useEffect(() => {
+    const channel = supabase
+      .channel("properties-realtime")
+      .on("postgres_changes", { event: "*", schema: "public", table: "properties" }, () => load())
+      .subscribe();
+    return () => { supabase.removeChannel(channel); };
+  }, [load]);
+
   const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
 
   function buildPageHref(p: number) {

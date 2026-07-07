@@ -31,6 +31,17 @@ export default function AdminLeadsPage() {
       });
   }, []);
 
+  // Realtime — new leads appear instantly
+  useEffect(() => {
+    const channel = supabase
+      .channel("admin-leads-realtime")
+      .on("postgres_changes", { event: "INSERT", schema: "public", table: "leads" }, (payload) => {
+        setLeads((prev) => [payload.new as LeadWithProperty, ...prev]);
+      })
+      .subscribe();
+    return () => { supabase.removeChannel(channel); };
+  }, []);
+
   function handleStatusUpdate(id: string, newStatus: LeadStatus) {
     setLeads((prev) => prev.map((l) => (l.id === id ? { ...l, status: newStatus } : l)));
     if (selectedLead?.id === id) setSelectedLead((prev) => prev ? { ...prev, status: newStatus } : prev);

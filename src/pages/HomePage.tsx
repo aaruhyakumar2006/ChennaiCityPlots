@@ -136,6 +136,15 @@ export default function HomePage() {
     load();
   }, []);
 
+  // ── Realtime: update featured when admin changes properties ──
+  useEffect(() => {
+    const channel = supabase
+      .channel("homepage-properties")
+      .on("postgres_changes", { event: "*", schema: "public", table: "properties" }, () => load())
+      .subscribe();
+    return () => { supabase.removeChannel(channel); };
+  }, []);
+
   return (
     <>
       <Helmet>
