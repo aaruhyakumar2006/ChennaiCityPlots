@@ -53,8 +53,12 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
       setLoading(false);
     });
 
-    const { data: sub } = supabase.auth.onAuthStateChange((_event, s) => {
-      setSession(s);
+    const { data: sub } = supabase.auth.onAuthStateChange((event, s) => {
+      if (event === "SIGNED_OUT") {
+        setSession(null);
+      } else if (s) {
+        setSession(s);
+      }
     });
     return () => sub.subscription.unsubscribe();
   }, []);

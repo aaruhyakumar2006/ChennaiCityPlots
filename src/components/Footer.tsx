@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { Home as HomeIcon, MapPin, Phone, Mail, Facebook, Instagram, Linkedin } from "lucide-react";
+import { Home as HomeIcon, MapPin, Phone, Mail, Facebook, Instagram } from "lucide-react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
@@ -56,7 +56,7 @@ export default function Footer() {
             Transparent pricing, legal assistance and end-to-end support.
           </p>
           <div className="flex gap-3 mt-5">
-            {[Facebook, Instagram, Linkedin].map((Icon, i) => (
+            {[Facebook, Instagram].map((Icon, i) => (
               <a
                 key={i}
                 href="#"

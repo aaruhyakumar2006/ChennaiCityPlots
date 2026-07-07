@@ -1,7 +1,9 @@
 import { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { X, Home as HomeIcon, Loader2, Mail, Lock, User, Phone, Eye, EyeOff, ShieldCheck, MapPin, BadgeCheck } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { useUserAuth } from "@/lib/useUserAuth";
+import { isAdminEmail } from "@/App";
 
 type Mode = "signup" | "login" | "verify_email";
 
@@ -42,22 +44,33 @@ function Field({
 // Individual OTP digit boxes
 function OtpInput({ value, onChange }: { value: string; onChange: (v: string) => void }) {
   const refs = useRef<(HTMLInputElement | null)[]>([]);
-  const digits = value.padEnd(6, "").split("").slice(0, 6);
 
   function handleChange(i: number, v: string) {
     const d = v.replace(/\D/g, "").slice(-1);
-    const next = digits.map((c, idx) => (idx === i ? d : c)).join("").replace(/ /g, "");
-    onChange(next);
+    const arr = value.split("").concat(Array(6).fill("")).slice(0, 6);
+    arr[i] = d;
+    onChange(arr.join(""));
     if (d && i < 5) refs.current[i + 1]?.focus();
   }
 
-  function handleKeyDown(i: number, e: React.KeyboardEvent) {
-    if (e.key === "Backspace" && !digits[i] && i > 0) refs.current[i - 1]?.focus();
+  function handleKeyDown(i: number, e: React.KeyboardEvent<HTMLInputElement>) {
+    if (e.key === "Backspace") {
+      e.preventDefault();
+      const arr = value.split("").concat(Array(6).fill("")).slice(0, 6);
+      if (arr[i]) {
+        arr[i] = "";
+        onChange(arr.join(""));
+      } else if (i > 0) {
+        arr[i - 1] = "";
+        onChange(arr.join(""));
+        refs.current[i - 1]?.focus();
+      }
+    }
   }
 
   function handlePaste(e: React.ClipboardEvent) {
     const pasted = e.clipboardData.getData("text").replace(/\D/g, "").slice(0, 6);
-    if (pasted) { onChange(pasted); refs.current[Math.min(pasted.length, 5)]?.focus(); }
+    if (pasted) { onChange(pasted.padEnd(6, "").slice(0, 6)); refs.current[Math.min(pasted.length, 5)]?.focus(); }
     e.preventDefault();
   }
 
@@ -67,17 +80,19 @@ function OtpInput({ value, onChange }: { value: string; onChange: (v: string) =>
         <input
           key={i}
           ref={(el) => { refs.current[i] = el; }}
-          type="text" inputMode="numeric" maxLength={1}
-          value={digits[i]?.trim() || ""}
+          type="text"
+          inputMode="numeric"
+          maxLength={1}
+          value={value[i] || ""}
           onChange={(e) => handleChange(i, e.target.value)}
           onKeyDown={(e) => handleKeyDown(i, e)}
           onPaste={handlePaste}
-          className={`w-14 h-16 text-center text-2xl font-bold rounded-xl border-2 outline-none transition-all duration-200
-            ${ digits[i]?.trim()
-              ? "border-accent bg-accent/5 text-accent"
-              : "border-slate-200 bg-slate-50 text-ink focus:border-accent focus:bg-white"
-            }`}
-          style={{ color: digits[i]?.trim() ? undefined : "#0D1117" }}
+          className="w-14 h-16 text-center text-2xl font-bold rounded-xl border-2 outline-none transition-all duration-200"
+          style={{
+            color: "#111827",
+            background: value[i] ? "#EFF6FF" : "#F8FAFC",
+            borderColor: value[i] ? "#1D4ED8" : "#CBD5E1",
+          }}
         />
       ))}
     </div>
@@ -92,6 +107,7 @@ const PERKS = [
 
 export default function AuthGateModal() {
   const { closeGate, gateReason } = useUserAuth();
+  const navigate = useNavigate();
   const [mode, setMode]         = useState<Mode>("signup");
   const [name, setName]         = useState("");
   const [mobile, setMobile]     = useState("");
@@ -116,9 +132,14 @@ export default function AuthGateModal() {
 
   async function handleLogin(e: React.FormEvent) {
     e.preventDefault(); setError(""); setLoading(true);
-    const { error: err } = await supabase.auth.signInWithPassword({ email, password });
+    const { data, error: err } = await supabase.auth.signInWithPassword({ email, password });
     setLoading(false);
     if (err) { setError(err.message); return; }
+    if (isAdminEmail(data.session?.user.email)) {
+      closeGate();
+      navigate("/admin");
+      return;
+    }
     closeGate();
   }
 
