@@ -1,27 +1,22 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
 import { useNavigate } from "react-router-dom";
 import { Home as HomeIcon } from "lucide-react";
 import { useAuth, isAdminEmail } from "@/App";
-import { useEffect } from "react";
 
 export default function LoginPage() {
   const navigate = useNavigate();
   const { session, loading } = useAuth();
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
-  const [ready, setReady] = useState(false);
 
-  // On mount: sign out any existing session, then show the form
+  // If already authenticated as admin, go straight to dashboard
   useEffect(() => {
-    supabase.auth.signOut().then(() => setReady(true));
-  }, []);
-
-  // Redirect if already logged in as admin
-  useEffect(() => {
-    if (ready && !loading && session && isAdminEmail(session.user.email)) navigate("/admin", { replace: true });
-  }, [session, loading, navigate, ready]);
+    if (!loading && session && isAdminEmail(session.user.email)) {
+      navigate("/admin", { replace: true });
+    }
+  }, [session, loading, navigate]);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -49,14 +44,11 @@ export default function LoginPage() {
       return;
     }
 
-    navigate("/admin");
+    navigate("/admin", { replace: true });
   }
 
   return (
     <section className="min-h-screen bg-gradient-to-br from-slate-900 via-ink to-slate-900 flex items-center justify-center px-5 py-16">
-      {!ready ? (
-        <div className="w-8 h-8 rounded-full border-2 border-white border-t-transparent animate-spin" />
-      ) : (
       <div className="w-full max-w-sm">
         <Link to="/" className="flex items-center gap-2 mb-10 mx-auto w-fit">
           <span className="w-10 h-10 rounded-xl seal flex items-center justify-center shadow-lg">
@@ -114,7 +106,6 @@ export default function LoginPage() {
           <Link to="/" className="hover:text-white transition">← Back to website</Link>
         </p>
       </div>
-      )}
     </section>
   );
 }
