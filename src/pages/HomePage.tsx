@@ -11,6 +11,8 @@ import RecentlyViewedSection from "@/components/RecentlyViewedSection";
 import HomeLoanSection from "@/components/HomeLoanSection";
 import type { PropertyCardData } from "@/types";
 
+const SITE_URL = import.meta.env.VITE_SITE_URL ?? "https://www.madrascityplots.com";
+
 const WHY_US = [
   { icon: ShieldCheck, title: "DTCP & CMDA Verified", desc: "Every plot is verified for DTCP and CMDA approvals before listing — no illegal layouts, no surprises." },
   { icon: FileText, title: "Transparent Pricing", desc: "No hidden charges. Final price, registration and EC costs shown upfront — in writing." },
@@ -142,10 +144,38 @@ export default function HomePage() {
     <>
       <Helmet>
         <title>Madras City Plots — Premium Real Estate in Chennai</title>
-        <meta name="description" content="Find your dream home in Chennai with Madras City Plots. Browse premium residential and commercial properties." />
+        <meta name="description" content="Find DTCP & CMDA verified residential and commercial plots in Chennai. Transparent pricing, legal assistance and free site visits. 500+ happy families." />
+        <meta name="keywords" content="plots for sale Chennai, DTCP approved plots Chennai, CMDA plots Chennai, buy land Chennai, residential plots Chennai, commercial plots Chennai" />
+        <link rel="canonical" href={SITE_URL} />
         <meta property="og:title" content="Madras City Plots — Premium Real Estate in Chennai" />
-        <meta property="og:description" content="Find your dream home in Chennai with Madras City Plots. Browse premium residential and commercial properties." />
+        <meta property="og:description" content="DTCP & CMDA verified plots in Chennai. Transparent pricing, legal assistance and free site visits." />
         <meta property="og:type" content="website" />
+        <meta property="og:url" content={SITE_URL} />
+        <meta property="og:image" content={`${SITE_URL}/placeholder-property.png`} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Madras City Plots — Premium Real Estate in Chennai" />
+        <meta name="twitter:description" content="DTCP & CMDA verified plots in Chennai. Transparent pricing, legal assistance and free site visits." />
+        <meta name="twitter:image" content={`${SITE_URL}/placeholder-property.png`} />
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "RealEstateAgent",
+          "name": "Madras City Plots",
+          "url": SITE_URL,
+          "logo": `${SITE_URL}/favicon.svg`,
+          "description": "DTCP & CMDA verified residential and commercial plots in Chennai. Transparent pricing, legal assistance and free site visits.",
+          "telephone": "+916369678465",
+          "email": "madrascityplot@gmail.com",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Srinivas Flats, Block 2, S1, Ponnuswamy Street, Ullagaram",
+            "addressLocality": "Nanganallur, Chennai",
+            "addressRegion": "Tamil Nadu",
+            "postalCode": "600061",
+            "addressCountry": "IN"
+          },
+          "areaServed": "Chennai",
+          "sameAs": []
+        })}</script>
       </Helmet>
 
       {/* ── HERO ── */}

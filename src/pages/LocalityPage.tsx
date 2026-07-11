@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import { Building2, TrendingUp, MapPin, ArrowRight, BarChart3, Home } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import PropertyCard from "@/components/PropertyCard";
 import { formatPriceLabel } from "@/lib/format";
 import type { PropertyCardData } from "@/types";
+
+const SITE_URL = import.meta.env.VITE_SITE_URL ?? "https://www.madrascityplots.com";
 
 function areaLabelFromSlug(slug: string) {
   return slug.split("-").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
@@ -54,13 +57,24 @@ export default function LocalityPage() {
           });
         }
         setLoading(false);
-        document.title = `Properties in ${areaLabel} | Madras City Plots`;
       });
-    return () => { document.title = "Madras City Plots — Premium Real Estate in Chennai"; };
   }, [area]);
 
   return (
     <>
+      <Helmet>
+        <title>{areaLabel ? `Plots in ${areaLabel}, Chennai | Madras City Plots` : "Properties by Locality | Madras City Plots"}</title>
+        <meta name="description" content={areaLabel ? `Browse verified DTCP & CMDA approved plots in ${areaLabel}, Chennai. ${properties.length > 0 ? `${properties.length} listings` : "Premium listings"} with transparent pricing. Book a free site visit today.` : "Browse plots by locality in Chennai."} />
+        <meta name="keywords" content={`plots in ${areaLabel} Chennai, buy land ${areaLabel}, DTCP approved plots ${areaLabel}, residential plots ${areaLabel}`} />
+        <link rel="canonical" href={`${SITE_URL}/properties/location/${area ?? ""}`} />
+        <meta property="og:title" content={`Plots in ${areaLabel}, Chennai | Madras City Plots`} />
+        <meta property="og:description" content={`Verified DTCP & CMDA approved plots in ${areaLabel}, Chennai. Transparent pricing, free site visits.`} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={`${SITE_URL}/properties/location/${area ?? ""}`} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={`Plots in ${areaLabel}, Chennai | Madras City Plots`} />
+        <meta name="twitter:description" content={`Verified plots in ${areaLabel}, Chennai. Transparent pricing, free site visits.`} />
+      </Helmet>
       {/* Hero */}
       <div className="relative aurora-bg overflow-hidden">
         <div className="orb w-80 h-80 top-[-6rem] right-[-6rem]"

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { X, Home as HomeIcon, Loader2, Mail, Lock, User, Phone, Eye, EyeOff, ShieldCheck, MapPin, BadgeCheck } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { useUserAuth } from "@/lib/useUserAuth";
-import { isAdminEmail } from "@/App";
+import { isAdminUser } from "@/lib/adminAuth";
 
 type Mode = "signup" | "login" | "verify_email";
 
@@ -135,7 +135,8 @@ export default function AuthGateModal() {
     const { data, error: err } = await supabase.auth.signInWithPassword({ email, password });
     setLoading(false);
     if (err) { setError(err.message); return; }
-    if (isAdminEmail(data.session?.user.email)) {
+    const adminStatus = await isAdminUser(data.session?.user.email);
+    if (adminStatus) {
       closeGate();
       navigate("/admin", { replace: true });
       return;

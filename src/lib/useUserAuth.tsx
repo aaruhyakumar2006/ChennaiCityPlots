@@ -45,7 +45,36 @@ export function UserAuthProvider({ children }: { children: React.ReactNode }) {
     setShowGate(true);
   }
   function closeGate() { setShowGate(false); }
-  async function signOut() { await supabase.auth.signOut(); setUser(null); }
+  
+  async function signOut() {
+    if (!user) return;
+    
+    try {
+      // Save session data to user profile before logout
+      await supabase
+        .from("user_profile")
+        .upsert({
+          id: user.id,
+          email: user.email || "",
+          name: user.user_metadata?.full_name || null,
+          mobile: user.user_metadata?.mobile || null,
+          last_logout: new Date().toISOString(),
+          session_data: {
+            last_viewed_properties: [],
+            preferences: {}
+          },
+          updated_at: new Date().toISOString(),
+        } as any, {
+          onConflict: "id"
+        });
+    } catch (err) {
+      console.error("Failed to save session data:", err);
+    }
+    
+    // Sign out from Supabase
+    await supabase.auth.signOut();
+    setUser(null);
+  }
 
   return (
     <UserAuthContext.Provider value={{ user, loading, showGate, openGate, closeGate, gateReason, signOut }}>

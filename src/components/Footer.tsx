@@ -1,39 +1,73 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { Home as HomeIcon, MapPin, Phone, Mail, Facebook, Instagram } from "lucide-react";
-import L from "leaflet";
-import "leaflet/dist/leaflet.css";
-
-delete (L.Icon.Default.prototype as any)._getIconUrl;
-L.Icon.Default.mergeOptions({
-  iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
-  iconRetinaUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
-  shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
-});
 
 // Office location — Nanganallur, Chennai
 const OFFICE: [number, number] = [12.9856, 80.1935];
 
+/** Lazy-initialises a Leaflet map only when the container scrolls into view */
 function OfficeMap() {
-  const ref = useRef<HTMLDivElement>(null);
-  const mapRef = useRef<L.Map | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const mapRef       = useRef<unknown>(null);
+  const [visible, setVisible] = useState(false);
 
+  // Step 1: watch for visibility
   useEffect(() => {
-    if (!ref.current || mapRef.current) return;
-    const map = L.map(ref.current, { zoomControl: false, scrollWheelZoom: false, dragging: false })
-      .setView(OFFICE, 15);
-    mapRef.current = map;
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution: '© <a href="https://www.openstreetmap.org/copyright">OSM</a>',
-    }).addTo(map);
-    L.marker(OFFICE).addTo(map).bindPopup("Chennai City Plots").openPopup();
-    setTimeout(() => map.invalidateSize(), 100);
-    return () => { map.remove(); mapRef.current = null; };
+    const el = containerRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setVisible(true); observer.disconnect(); } },
+      { rootMargin: "200px" }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
   }, []);
 
+  // Step 2: load Leaflet only once visible
+  useEffect(() => {
+    if (!visible || !containerRef.current || mapRef.current) return;
+
+    import("leaflet").then((L) => {
+      import("leaflet/dist/leaflet.css");
+
+      delete (L.Icon.Default.prototype as any)._getIconUrl;
+      L.Icon.Default.mergeOptions({
+        iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
+        iconRetinaUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
+        shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+      });
+
+      if (!containerRef.current || mapRef.current) return;
+      const map = L.map(containerRef.current, {
+        zoomControl: false,
+        scrollWheelZoom: false,
+        dragging: false,
+      }).setView(OFFICE, 15);
+      mapRef.current = map;
+
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: '© <a href="https://www.openstreetmap.org/copyright">OSM</a>',
+      }).addTo(map);
+      L.marker(OFFICE).addTo(map).bindPopup("Madras City Plots").openPopup();
+      setTimeout(() => map.invalidateSize(), 100);
+    });
+
+    return () => {
+      if (mapRef.current) {
+        (mapRef.current as any).remove();
+        mapRef.current = null;
+      }
+    };
+  }, [visible]);
+
   return (
-    <div className="relative rounded-xl overflow-hidden" style={{ height: "128px" }}>
-      <div ref={ref} className="absolute inset-0 z-0" style={{ height: "100%", width: "100%" }} />
+    <div className="relative rounded-xl overflow-hidden bg-slate-800" style={{ height: "128px" }}>
+      <div ref={containerRef} className="absolute inset-0 z-0" style={{ height: "100%", width: "100%" }} />
+      {!visible && (
+        <div className="absolute inset-0 flex items-center justify-center text-xs text-gray-500">
+          <MapPin className="w-4 h-4 mr-1" /> Loading map…
+        </div>
+      )}
     </div>
   );
 }
@@ -56,7 +90,7 @@ export default function Footer() {
           </p>
           <div className="flex gap-3 mt-5">
             {[
-              { Icon: Facebook, href: "https://www.facebook.com/profile.php?id=61591524131528" },
+              { Icon: Facebook,  href: "https://www.facebook.com/profile.php?id=61591524131528" },
               { Icon: Instagram, href: "https://www.instagram.com/madrascityhousing_?igsh=MWJoY2pqaGg1OWNxbA==" },
             ].map(({ Icon, href }, i) => (
               <a
@@ -90,12 +124,12 @@ export default function Footer() {
           <h4 className="text-white font-display font-semibold mb-4">Popular Localities</h4>
           <ul className="space-y-2.5 text-sm text-gray-400">
             {[
-              ["OMR", "omr-chennai"],
-              ["Anna Nagar", "anna-nagar"],
-              ["Velachery", "velachery"],
-              ["Porur", "porur"],
-              ["Perungudi", "perungudi"],
-              ["Sholinganallur", "sholinganallur"],
+              ["OMR",           "omr-chennai"],
+              ["Anna Nagar",    "anna-nagar"],
+              ["Velachery",     "velachery"],
+              ["Porur",         "porur"],
+              ["Perungudi",     "perungudi"],
+              ["Sholinganallur","sholinganallur"],
             ].map(([label, slug]) => (
               <li key={slug}>
                 <Link to={`/properties/location/${slug}`} className="hover:text-accent transition">
@@ -112,16 +146,21 @@ export default function Footer() {
           <ul className="space-y-3 text-sm text-gray-400">
             <li className="flex gap-2">
               <MapPin className="w-4 h-4 mt-0.5 shrink-0 text-accent" />
-              Srinivas Flats, Block 2, S1, 2nd Floor, Plot Nos. 1, 2 &amp; 3 Ponnuswamy Street, Ullagaram, Nanganallur, Chennai 600061
-              <span className="text-gray-500">(Opp to Sri Krishna Sweets)</span>
+              <span>
+                Srinivas Flats, Block 2, S1, 2nd Floor, Plot Nos. 1, 2 &amp; 3 Ponnuswamy Street,
+                Ullagaram, Nanganallur, Chennai 600061
+                <span className="text-gray-500"> (Opp to Sri Krishna Sweets)</span>
+              </span>
             </li>
             <li className="flex gap-2">
               <Phone className="w-4 h-4 mt-0.5 shrink-0 text-accent" />
-              +91 63696 78465
+              <a href="tel:+916369678465" className="hover:text-accent transition">+91 63696 78465</a>
             </li>
             <li className="flex gap-2">
               <Mail className="w-4 h-4 mt-0.5 shrink-0 text-accent" />
-              <a href="mailto:madrascityplot@gmail.com" className="hover:text-accent transition">madrascityplot@gmail.com</a>
+              <a href="mailto:madrascityplot@gmail.com" className="hover:text-accent transition">
+                madrascityplot@gmail.com
+              </a>
             </li>
           </ul>
           <div className="mt-5">
@@ -130,11 +169,9 @@ export default function Footer() {
         </div>
       </div>
 
-
       <div className="border-t border-white/10 py-5 text-center text-xs text-gray-500">
         © {new Date().getFullYear()} Madras City Plots. All rights reserved. · DTCP &amp; CMDA Approved Plot Broker, Chennai.
       </div>
     </footer>
   );
 }
-

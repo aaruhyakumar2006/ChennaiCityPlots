@@ -4,6 +4,7 @@ import StatusBadge from "@/components/StatusBadge";
 import PropertyRowActions from "@/components/admin/PropertyRowActions";
 import PropertyFormModal from "@/components/admin/PropertyFormModal";
 import { formatPriceLabel } from "@/lib/format";
+import { Search } from "lucide-react";
 import type { PropertyRow } from "@/types";
 
 export default function AdminPropertiesPage() {
@@ -11,6 +12,7 @@ export default function AdminPropertiesPage() {
   const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
   const [editingProperty, setEditingProperty] = useState<PropertyRow | undefined>(undefined);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     supabase
@@ -48,11 +50,34 @@ export default function AdminPropertiesPage() {
     setModalOpen(false);
   }
 
+  const filtered = search.trim()
+    ? properties.filter((p) => {
+        const q = search.toLowerCase();
+        return (
+          p.name.toLowerCase().includes(q) ||
+          p.location.toLowerCase().includes(q) ||
+          p.property_id.toLowerCase().includes(q)
+        );
+      })
+    : properties;
+
   return (
     <>
       <div className="bg-white rounded-xl2 border border-line overflow-hidden">
-        <div className="flex items-center justify-between px-5 py-4 border-b border-line">
-          <p className="text-sm text-muted">{properties.length} properties</p>
+        <div className="flex items-center justify-between px-5 py-4 border-b border-line gap-3 flex-wrap">
+          <div className="flex items-center gap-3">
+            <p className="text-sm text-muted">{filtered.length} of {properties.length} properties</p>
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted pointer-events-none" />
+              <input
+                type="text"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search name, location…"
+                className="pl-8 pr-3 py-1.5 rounded-lg border border-line text-xs focus:border-accent focus:outline-none w-48"
+              />
+            </div>
+          </div>
           <button
             className="px-4 py-2 rounded-xl2 bg-accent text-white text-sm font-semibold hover:bg-accent/90 transition"
             onClick={openCreate}
@@ -76,7 +101,7 @@ export default function AdminPropertiesPage() {
                 </tr>
               </thead>
               <tbody>
-                {properties.map((p) => (
+                {filtered.map((p) => (
                   <tr key={p.id} className="border-t border-line hover:bg-surface/60">
                     <td className="px-5 py-3.5">
                       <p className="font-medium">{p.name}</p>
@@ -96,7 +121,7 @@ export default function AdminPropertiesPage() {
                     </td>
                   </tr>
                 ))}
-                {properties.length === 0 && (
+                {filtered.length === 0 && (
                   <tr>
                     <td colSpan={6} className="px-5 py-10 text-center text-muted">
                       No properties yet — click "Create Property" to add one.

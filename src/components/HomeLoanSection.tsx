@@ -23,7 +23,7 @@ export default function HomeLoanSection() {
     const { error: err } = await (supabase.from("leads") as ReturnType<typeof supabase.from>).insert({
       name:    fd.get("name") as string,
       mobile:  fd.get("mobile") as string,
-      email:   "homeloan@inquiry.pdh",
+      email:   fd.get("email") as string,
       message: `Plot Loan Enquiry — Budget: ${budget}`,
       status:  "NEW",
     } as never);
@@ -112,6 +112,13 @@ export default function HomeLoanSection() {
                   type="tel"
                   pattern="[0-9]{10}"
                   placeholder="Mobile Number (10 digits)"
+                  className="w-full px-4 py-3 rounded-xl2 bg-white/15 border border-white/20 text-white placeholder:text-slate-400 text-sm focus:border-accent focus:outline-none"
+                />
+                <input
+                  required
+                  name="email"
+                  type="email"
+                  placeholder="Email Address"
                   className="w-full px-4 py-3 rounded-xl2 bg-white/15 border border-white/20 text-white placeholder:text-slate-400 text-sm focus:border-accent focus:outline-none"
                 />
                 <select

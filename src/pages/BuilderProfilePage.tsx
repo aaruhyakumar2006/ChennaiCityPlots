@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import { Globe, Phone, Mail, Building2, CheckCircle2, CalendarDays, ArrowRight } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import PropertyCard from "@/components/PropertyCard";
 import type { BuilderRow, PropertyCardData } from "@/types";
+
+const SITE_URL = import.meta.env.VITE_SITE_URL ?? "https://www.madrascityplots.com";
 
 export default function BuilderProfilePage() {
   const { slug } = useParams<{ slug: string }>();
@@ -28,13 +31,12 @@ export default function BuilderProfilePage() {
 
       setBuilder(data as BuilderRow);
 
-      // Only fetch properties belonging to this builder
-      const { data: pData } = await (supabase.from("properties") as any)
+      const { data: pData, error: pError } = await (supabase.from("properties") as any)
         .select("id, property_id, name, slug, type, status, location, price, area_min, area_max, configuration, description, views, property_images(url, sort_order)")
         .eq("builder_id", data.id)
         .order("created_at", { ascending: false });
 
-      setProperties((pData as PropertyCardData[]) ?? []);
+      if (!pError) setProperties((pData as PropertyCardData[]) ?? []);
       setLoading(false);
     }
 
@@ -62,6 +64,19 @@ export default function BuilderProfilePage() {
 
   return (
     <>
+      <Helmet>
+        <title>{builder.name} | Plot Builder in Chennai — Madras City Plots</title>
+        <meta name="description" content={builder.description ? `${builder.description.slice(0, 150)}…` : `Explore plots and projects by ${builder.name} in Chennai. Verified builder on Madras City Plots.`} />
+        <link rel="canonical" href={`${SITE_URL}/builders/${slug}`} />
+        <meta property="og:title" content={`${builder.name} | Plot Builder in Chennai`} />
+        <meta property="og:description" content={builder.description ?? `Explore plots by ${builder.name} — verified builder on Madras City Plots.`} />
+        <meta property="og:type" content="profile" />
+        <meta property="og:url" content={`${SITE_URL}/builders/${slug}`} />
+        {builder.logo_url && <meta property="og:image" content={builder.logo_url} />}
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content={`${builder.name} | Plot Builder in Chennai`} />
+        <meta name="twitter:description" content={builder.description ?? `Explore plots by ${builder.name} on Madras City Plots.`} />
+      </Helmet>
       {/* Breadcrumb */}
       <div className="max-w-7xl mx-auto px-5 md:px-8 pt-8">
         <p className="text-sm text-muted mb-5">

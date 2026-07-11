@@ -1,16 +1,11 @@
 import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, ShieldCheck, MapPin, Phone, Star, TrendingUp, CheckCircle, Building2, Users } from "lucide-react";
+import { supabase } from "@/lib/supabase";
+import { formatPriceLabel } from "@/lib/format";
 import NaturalSearchBar from "@/components/NaturalSearchBar";
 
-const WORDS = ["DTCP Approved", "CMDA Verified", "RERA Certified", "Dream Plot", "Best Investment"];
-
-// ── Floating property cards data ──────────────────────────────────────────────
-const CARDS = [
-  { name: "Green Valley Plots", location: "OMR, Chennai", price: "₹45L", sqft: "1200 sq.ft", badge: "DTCP", img: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=400&q=80", tag: "Available" },
-  { name: "Sunrise Enclave", location: "Tambaram, Chennai", price: "₹28L", sqft: "800 sq.ft", badge: "CMDA", img: "https://images.unsplash.com/photo-1416331108676-a22ccb276e35?w=400&q=80", tag: "Hot Deal" },
-  { name: "Royal Gardens", location: "ECR, Chennai", price: "₹72L", sqft: "2400 sq.ft", badge: "RERA", img: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=400&q=80", tag: "New Launch" },
-];
+const WORDS = ["DTCP Approved", "CMDA Verified", "Dream Plot", "Best Investment", "Ready to Move"];
 
 const STATS = [
   { icon: Building2, value: "50+",  label: "Verified Plots" },
@@ -71,7 +66,18 @@ function Counter({ to, suffix = "" }: { to: number; suffix?: string }) {
 }
 
 // ── Floating card ─────────────────────────────────────────────────────────────
-function FloatingCard({ card, style }: { card: typeof CARDS[0]; style: React.CSSProperties }) {
+interface HeroCard {
+  name: string; location: string; price: string; sqft: string;
+  badge: string; img: string; tag: string; slug: string;
+}
+
+const PLACEHOLDER_CARDS: HeroCard[] = [
+  { name: "Premium Residential Plot", location: "OMR, Chennai",      price: "₹45L+", sqft: "1200 sq.ft", badge: "DTCP", img: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=400&q=80", tag: "Available",  slug: "/properties" },
+  { name: "Commercial Land",          location: "Tambaram, Chennai",  price: "₹28L+", sqft: "800 sq.ft",  badge: "CMDA", img: "https://images.unsplash.com/photo-1416331108676-a22ccb276e35?w=400&q=80", tag: "Hot Deal",   slug: "/properties" },
+  { name: "Gated Community Plot",     location: "ECR, Chennai",       price: "₹72L+", sqft: "2400 sq.ft", badge: "DTCP", img: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=400&q=80", tag: "New Launch", slug: "/properties" },
+];
+
+function FloatingCard({ card, style }: { card: HeroCard; style: React.CSSProperties }) {
   return (
     <div
       className="absolute bg-white rounded-2xl shadow-2xl overflow-hidden w-56 border border-slate-100"
@@ -108,7 +114,36 @@ function FloatingCard({ card, style }: { card: typeof CARDS[0]; style: React.CSS
 // ── Main Hero ─────────────────────────────────────────────────────────────────
 export default function HeroSection({ totalCount, happyBuyers = 0 }: { totalCount: number; happyBuyers?: number }) {
   const [up, setUp] = useState(false);
+  const [cards, setCards] = useState<HeroCard[]>(PLACEHOLDER_CARDS);
+
   useEffect(() => { const t = setTimeout(() => setUp(true), 80); return () => clearTimeout(t); }, []);
+
+  // Load real featured properties for the floating cards
+  useEffect(() => {
+    supabase
+      .from("properties")
+      .select("name, slug, location, price, plot_size_sqft, area_min, status, property_images(url, sort_order)")
+      .eq("featured", true)
+      .limit(3)
+      .then(({ data }) => {
+        if (!data || data.length === 0) return;
+        const mapped: HeroCard[] = data.map((p: any, i: number) => ({
+          name:     p.name,
+          location: p.location,
+          price:    formatPriceLabel(p.price),
+          sqft:     p.plot_size_sqft
+            ? `${p.plot_size_sqft.toLocaleString("en-IN")} sq.ft`
+            : p.area_min ? `From ${p.area_min} sq.ft` : "On request",
+          badge:    "DTCP",
+          img:      p.property_images?.[0]?.url ?? PLACEHOLDER_CARDS[i % 3].img,
+          tag:      p.status === "READY_TO_MOVE" ? "Available" : "Coming Soon",
+          slug:     `/properties/${p.slug}`,
+        }));
+        // Pad with placeholders if fewer than 3
+        while (mapped.length < 3) mapped.push(PLACEHOLDER_CARDS[mapped.length]);
+        setCards(mapped);
+      });
+  }, []);
 
   return (
     <section className="relative w-full overflow-hidden bg-white" style={{ minHeight: "92vh" }}>
@@ -240,9 +275,9 @@ export default function HeroSection({ totalCount, happyBuyers = 0 }: { totalCoun
           </div>
 
           {/* Floating cards */}
-          <FloatingCard card={CARDS[0]} style={{ top: "0px", right: "20px", animationDelay: "0s" }} />
-          <FloatingCard card={CARDS[1]} style={{ bottom: "40px", right: "0px", animationDelay: "-2s", animationDuration: "7s" }} />
-          <FloatingCard card={CARDS[2]} style={{ top: "160px", left: "-10px", animationDelay: "-4s", animationDuration: "8s" }} />
+          <FloatingCard card={cards[0]} style={{ top: "0px", right: "20px", animationDelay: "0s" }} />
+          <FloatingCard card={cards[1]} style={{ bottom: "40px", right: "0px", animationDelay: "-2s", animationDuration: "7s" }} />
+          <FloatingCard card={cards[2]} style={{ top: "160px", left: "-10px", animationDelay: "-4s", animationDuration: "8s" }} />
 
           {/* Verified badge floating */}
           <div className="absolute top-1/2 right-[-20px] -translate-y-1/2 bg-white rounded-2xl shadow-xl px-4 py-3 flex items-center gap-2.5 border border-slate-100"

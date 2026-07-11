@@ -77,7 +77,7 @@ export default function InquiryForm({ propertyId }: { propertyId: string }) {
 
       <form onSubmit={handleSubmit} className="p-5 space-y-3">
         <FloatInput name="name" label="Full Name" icon={User} required autoComplete="name" />
-        <FloatInput name="mobile" type="tel" label="Mobile Number" icon={Phone} required pattern="[0-9]{10}" autoComplete="tel" />
+        <FloatInput name="mobile" type="tel" label="Mobile Number" icon={Phone} required pattern="[6-9][0-9]{9}" autoComplete="tel" />
         <FloatInput name="email" type="email" label="Email Address" icon={Mail} required autoComplete="email" />
 
         {/* Textarea with floating label */}

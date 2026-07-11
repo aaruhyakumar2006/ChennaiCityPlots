@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { ArrowLeft, ShieldCheck, X, GitCompareArrows } from "lucide-react";
+import { Helmet } from "react-helmet-async";
 import { useCompare } from "@/lib/useCompare";
 import { formatPriceLabel } from "@/lib/format";
 import StatusBadge from "@/components/StatusBadge";
@@ -35,6 +36,11 @@ export default function ComparePage() {
   if (items.length < 2) {
     return (
       <div className="min-h-[70vh] flex flex-col items-center justify-center px-5">
+        <Helmet>
+          <title>Compare Properties | Madras City Plots</title>
+          <meta name="description" content="Compare plots side by side — price, area, location and status. Select any two properties to start comparing." />
+          <meta name="robots" content="noindex" />
+        </Helmet>
         <div className="text-center max-w-md">
           <div className="w-20 h-20 rounded-2xl bg-accent/8 flex items-center justify-center mx-auto mb-6">
             <GitCompareArrows className="w-10 h-10 text-accent" strokeWidth={1.5} />
@@ -55,6 +61,11 @@ export default function ComparePage() {
 
   return (
     <>
+      <Helmet>
+        <title>Compare Properties | Madras City Plots</title>
+        <meta name="description" content="Compare plots side by side — price, area, location and status. Make the right choice with a clear side-by-side view." />
+        <meta name="robots" content="noindex" />
+      </Helmet>
       {/* Header */}
       <div style={{ background: "linear-gradient(135deg, #0F5244 0%, #166534 100%)" }} className="text-white">
         <div className="max-w-5xl mx-auto px-5 md:px-8 py-8">

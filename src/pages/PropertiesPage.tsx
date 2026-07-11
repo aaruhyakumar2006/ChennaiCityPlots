@@ -9,6 +9,8 @@ import PropertySidebar from "@/components/PropertySidebar";
 import { formatPriceLabel } from "@/lib/format";
 import type { PropertyCardData } from "@/types";
 
+const SITE_URL = import.meta.env.VITE_SITE_URL ?? "https://www.madrascityplots.com";
+
 const PAGE_SIZE = 9;
 
 export default function PropertiesPage() {
@@ -110,11 +112,19 @@ export default function PropertiesPage() {
   return (
     <>
       <Helmet>
-        <title>Properties — Madras City Plots</title>
-        <meta name="description" content="Explore our curated listings of residential and commercial properties across Chennai." />
-        <meta property="og:title" content="Properties — Madras City Plots" />
-        <meta property="og:description" content="Explore our curated listings of residential and commercial properties across Chennai." />
+        <title>Plots for Sale in Chennai | Madras City Plots</title>
+        <meta name="description" content="Browse verified DTCP & CMDA approved residential and commercial plots across Chennai. Filter by location, budget and size. Free site visits." />
+        <meta name="keywords" content="plots for sale Chennai, buy plots Chennai, DTCP approved plots, residential plots Chennai, commercial land Chennai" />
+        <link rel="canonical" href={`${SITE_URL}/properties`} />
+        <meta property="og:title" content="Plots for Sale in Chennai | Madras City Plots" />
+        <meta property="og:description" content="Browse verified DTCP & CMDA approved plots across Chennai. Filter by location, budget and size." />
         <meta property="og:type" content="website" />
+        <meta property="og:url" content={`${SITE_URL}/properties`} />
+        <meta property="og:image" content={`${SITE_URL}/placeholder-property.png`} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Plots for Sale in Chennai | Madras City Plots" />
+        <meta name="twitter:description" content="Browse verified DTCP & CMDA approved plots across Chennai." />
+        <meta name="twitter:image" content={`${SITE_URL}/placeholder-property.png`} />
       </Helmet>
 
       {/* ── Page Hero ── */}

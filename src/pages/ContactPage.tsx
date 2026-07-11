@@ -1,8 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { MapPin, Phone, Mail, Clock, CheckCircle2, Loader2 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
+import { Helmet } from "react-helmet-async";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
+
+const SITE_URL = import.meta.env.VITE_SITE_URL ?? "https://www.madrascityplots.com";
 
 delete (L.Icon.Default.prototype as any)._getIconUrl;
 L.Icon.Default.mergeOptions({
@@ -86,6 +89,41 @@ export default function ContactPage() {
 
   return (
     <>
+      <Helmet>
+        <title>Contact Madras City Plots | Plot Enquiry in Chennai</title>
+        <meta name="description" content="Contact Madras City Plots for plot enquiries in Chennai. Call +91 63696 78465 or visit our office in Nanganallur. We respond within 2 hours." />
+        <meta name="keywords" content="contact Madras City Plots, plot enquiry Chennai, buy plots Chennai, real estate contact Chennai, Nanganallur plots" />
+        <link rel="canonical" href={`${SITE_URL}/contact`} />
+        <meta property="og:title" content="Contact Madras City Plots | Plot Enquiry in Chennai" />
+        <meta property="og:description" content="Reach us for plot enquiries across Chennai. Call, WhatsApp, or visit our Nanganallur office. Response within 2 hours." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={`${SITE_URL}/contact`} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Contact Madras City Plots | Plot Enquiry in Chennai" />
+        <meta name="twitter:description" content="Reach us for plot enquiries across Chennai. Call, WhatsApp, or visit our Nanganallur office." />
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "LocalBusiness",
+          "name": "Madras City Plots",
+          "image": `${SITE_URL}/favicon.svg`,
+          "url": SITE_URL,
+          "telephone": "+916369678465",
+          "email": "madrascityplot@gmail.com",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Srinivas Flats, Block 2, S1, 2nd Floor, Plot Nos. 1, 2 & 3 Ponnuswamy Street, Ullagaram",
+            "addressLocality": "Nanganallur",
+            "addressRegion": "Tamil Nadu",
+            "postalCode": "600061",
+            "addressCountry": "IN"
+          },
+          "geo": { "@type": "GeoCoordinates", "latitude": 12.9856, "longitude": 80.1935 },
+          "openingHoursSpecification": [
+            { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"], "opens": "09:00", "closes": "19:00" }
+          ],
+          "sameAs": []
+        })}</script>
+      </Helmet>
       {/* Hero */}
       <section className="relative bg-gradient-to-br from-ink via-slate-900 to-ink text-white py-20 px-5 md:px-8 overflow-hidden">
         <div className="absolute inset-0 opacity-5"
@@ -180,7 +218,7 @@ export default function ContactPage() {
                   </label>
                   <label className="flex flex-col gap-1.5">
                     <span className="text-xs font-semibold text-ink-700">Mobile <span className="text-red-500">*</span></span>
-                    <input required name="mobile" type="tel" pattern="[0-9]{10}" placeholder="10-digit number"
+                    <input required name="mobile" type="tel" pattern="[6-9][0-9]{9}" placeholder="10-digit number"
                       className="w-full px-3.5 py-2.5 rounded-xl border border-line text-sm focus:border-accent focus:outline-none" />
                   </label>
                 </div>

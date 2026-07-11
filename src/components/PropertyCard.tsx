@@ -130,7 +130,6 @@ export default function PropertyCard({ property }: { property: PropertyCardData 
             <button
               onClick={(e) => {
                 e.preventDefault();
-                if (!user) { openGate("Sign in to enquire about this property."); return; }
                 setEnquireOpen(true);
               }}
               className="flex items-center gap-1.5 text-xs font-semibold text-accent border border-accent/30 bg-accent/5 px-3 py-1.5 rounded-xl2 hover:bg-accent hover:text-white transition"

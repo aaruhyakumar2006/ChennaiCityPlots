@@ -1,5 +1,8 @@
 User-agent: *
 Allow: /
 Disallow: /admin/
-Sitemap: https://madrascityplots.com/sitemap.xml
+Disallow: /login
+Disallow: /saved
+Disallow: /compare
+Sitemap: https://www.madrascityplots.com/sitemap.xml
 

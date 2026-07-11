@@ -10,38 +10,42 @@ const ACTIONS: Record<VisitStatus, [string, VisitStatus][]> = {
 };
 
 export default function VisitActions({
-  id,
-  status,
-  onUpdate,
+  id, status, onUpdate,
 }: {
-  id: string;
-  status: VisitStatus;
-  onUpdate: (id: string, newStatus: VisitStatus) => void;
+  id: string; status: VisitStatus; onUpdate: (id: string, newStatus: VisitStatus) => void;
 }) {
   const [saving, setSaving] = useState(false);
+  const [err, setErr]       = useState("");
 
   async function update(newStatus: VisitStatus) {
     setSaving(true);
-    const { error } = await (supabase.from("site_visits") as ReturnType<typeof supabase.from>).update({ status: newStatus } as never).eq("id", id);
-    if (!error) onUpdate(id, newStatus);
+    setErr("");
+    const { error } = await (supabase.from("site_visits") as ReturnType<typeof supabase.from>)
+      .update({ status: newStatus } as never)
+      .eq("id", id);
     setSaving(false);
+    if (error) { setErr("Update failed"); return; }
+    onUpdate(id, newStatus);
   }
 
   const actions = ACTIONS[status] ?? [];
   if (actions.length === 0) return <span className="text-xs text-muted">—</span>;
 
   return (
-    <div className="flex justify-end gap-2">
-      {actions.map(([label, newStatus]) => (
-        <button
-          key={newStatus}
-          disabled={saving}
-          onClick={() => update(newStatus)}
-          className="text-xs font-semibold px-3 py-1.5 rounded-full border border-line hover:border-accent hover:text-accent transition disabled:opacity-60"
-        >
-          {label}
-        </button>
-      ))}
+    <div className="flex flex-col items-end gap-1">
+      <div className="flex justify-end gap-2">
+        {actions.map(([label, newStatus]) => (
+          <button
+            key={newStatus}
+            disabled={saving}
+            onClick={() => update(newStatus)}
+            className="text-xs font-semibold px-3 py-1.5 rounded-full border border-line hover:border-accent hover:text-accent transition disabled:opacity-60"
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+      {err && <p className="text-[10px] text-red-500">{err}</p>}
     </div>
   );
 }

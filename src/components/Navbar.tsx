@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { Home as HomeIcon, Menu, X, Heart, LogOut, UserCircle2, ShieldCheck } from "lucide-react";
 import { useWishlist } from "@/lib/useWishlist";
 import { useUserAuth } from "@/lib/useUserAuth";
-import { isAdminEmail } from "@/App";
+import { useAuth } from "@/App";
 
 const navLinks = [
   { href: "/",          label: "Home" },
@@ -15,11 +15,22 @@ const navLinks = [
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const { count: wishlistCount } = useWishlist();
-  const { user, openGate, signOut } = useUserAuth();
-  const isAdmin = isAdminEmail(user?.email);
+  const { user, signOut } = useUserAuth();
+  const { isAdmin: ctxIsAdmin } = useAuth();
+
+  // Update admin status when context changes
+  useEffect(() => {
+    setIsAdmin(ctxIsAdmin);
+  }, [ctxIsAdmin]);
+
+  async function handleSignOut() {
+    await signOut();
+    navigate("/", { replace: true });
+  }
 
   // Close mobile menu on route change
   useEffect(() => { setOpen(false); }, [pathname]);
@@ -104,7 +115,7 @@ export default function Navbar() {
                   </span>
                 )}
                 <button
-                  onClick={signOut}
+                  onClick={handleSignOut}
                   aria-label="Sign out"
                   className="w-9 h-9 rounded-xl2 border border-line flex items-center justify-center text-muted hover:border-red-400 hover:text-red-500 transition"
                 >
@@ -112,12 +123,12 @@ export default function Navbar() {
                 </button>
               </div>
             ) : (
-              <button
-                onClick={() => openGate()}
+              <Link
+                to="/login"
                 className="px-4 py-2 rounded-xl2 border border-accent text-accent text-sm font-semibold hover:bg-accent hover:text-white transition"
               >
                 Sign In
-              </button>
+              </Link>
             )}
           </div>
 
@@ -206,19 +217,20 @@ export default function Navbar() {
                     </button>
                   )}
                   <button
-                    onClick={() => { setOpen(false); signOut(); }}
+                    onClick={() => { setOpen(false); handleSignOut(); }}
                     className="flex items-center justify-center gap-2 w-full py-3 rounded-xl border border-white/15 text-sm font-semibold text-slate-300 hover:bg-white/8 transition"
                   >
                     <LogOut className="w-4 h-4" /> Sign Out
                   </button>
                 </div>
               ) : (
-                <button
-                  onClick={() => { setOpen(false); openGate(); }}
+                <Link
+                  to="/login"
+                  onClick={() => setOpen(false)}
                   className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl border border-white/20 text-sm font-bold text-white transition hover:bg-white/8"
                 >
                   Sign In
-                </button>
+                </Link>
               )}
 
               <Link

@@ -75,13 +75,14 @@ export default function AdminDashboard() {
     setLeads((leadsListRes.data as Pick<LeadRow, "created_at">[]) ?? []);
     setRecentLeads((recentRes.data as LeadRow[]) ?? []);
 
-    // Format leads for AI
+    // Format leads for AI — strip PII, keep only status/property/timing
     const rawLeads = (leadsAIRes.data as any[]) ?? [];
     setLeadsForAI(rawLeads.map((l: any) => ({
-      name: l.name, status: l.status,
+      name: "Lead",                          // anonymised
+      status: l.status,
       property: l.properties?.name ?? null,
       created_at: l.created_at,
-      message: l.message ?? null,
+      message: null,                         // strip message content
     })));
 
     setLoading(false);
@@ -337,7 +338,9 @@ export default function AdminDashboard() {
               {recentLeads.map((l) => (
                 <tr key={l.id} className="border-t border-line hover:bg-surface/60">
                   <td className="px-5 py-3 font-medium">{l.name}</td>
-                  <td className="px-5 py-3 text-muted">{l.mobile}</td>
+                  <td className="px-5 py-3 text-muted">
+                    <a href={`tel:${l.mobile}`} className="hover:text-accent transition">{l.mobile}</a>
+                  </td>
                   <td className="px-5 py-3 text-muted max-w-xs truncate">{l.message ?? "—"}</td>
                   <td className="px-5 py-3 text-muted">{formatDateShort(l.created_at)}</td>
                 </tr>

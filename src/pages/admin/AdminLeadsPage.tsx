@@ -4,6 +4,7 @@ import LeadStatusSelect from "@/components/admin/LeadStatusSelect";
 import ExportLeadsCsvButton from "@/components/admin/ExportLeadsCsvButton";
 import LeadDetailDrawer from "@/components/admin/LeadDetailDrawer";
 import { formatDateShort } from "@/lib/format";
+import { Search } from "lucide-react";
 import type { LeadWithProperty, LeadStatus } from "@/types";
 
 const STATUS_COLORS: Record<string, string> = {
@@ -19,6 +20,7 @@ export default function AdminLeadsPage() {
   const [loading, setLoading] = useState(true);
   const [selectedLead, setSelectedLead] = useState<LeadWithProperty | null>(null);
   const [filter, setFilter] = useState<LeadStatus | "ALL">("ALL");
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     supabase
@@ -31,12 +33,17 @@ export default function AdminLeadsPage() {
       });
   }, []);
 
-  // Realtime — new leads appear instantly
+  // Realtime — new leads appear instantly, status updates sync across tabs
   useEffect(() => {
     const channel = supabase
       .channel("admin-leads-realtime")
       .on("postgres_changes", { event: "INSERT", schema: "public", table: "leads" }, (payload) => {
         setLeads((prev) => [payload.new as LeadWithProperty, ...prev]);
+      })
+      .on("postgres_changes", { event: "UPDATE", schema: "public", table: "leads" }, (payload) => {
+        setLeads((prev) =>
+          prev.map((l) => (l.id === (payload.new as LeadWithProperty).id ? { ...l, ...(payload.new as LeadWithProperty) } : l))
+        );
       })
       .subscribe();
     return () => { supabase.removeChannel(channel); };
@@ -52,7 +59,18 @@ export default function AdminLeadsPage() {
     setSelectedLead(updated);
   }
 
-  const filtered = filter === "ALL" ? leads : leads.filter((l) => l.status === filter);
+  const byStatus  = filter === "ALL" ? leads : leads.filter((l) => l.status === filter);
+  const filtered  = search.trim()
+    ? byStatus.filter((l) => {
+        const q = search.toLowerCase();
+        return (
+          l.name.toLowerCase().includes(q) ||
+          l.mobile.includes(q) ||
+          l.email.toLowerCase().includes(q) ||
+          l.properties?.name?.toLowerCase().includes(q)
+        );
+      })
+    : byStatus;
   const newCount = leads.filter((l) => l.status === "NEW").length;
   const convertedCount = leads.filter((l) => l.status === "CONVERTED").length;
 
@@ -91,7 +109,19 @@ export default function AdminLeadsPage() {
               </button>
             ))}
           </div>
-          <ExportLeadsCsvButton
+          <div className="flex items-center gap-2 flex-wrap">
+            {/* Search */}
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted pointer-events-none" />
+              <input
+                type="text"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search name, mobile, email…"
+                className="pl-8 pr-3 py-1.5 rounded-lg border border-line text-xs focus:border-accent focus:outline-none w-52"
+              />
+            </div>
+              <ExportLeadsCsvButton
             leads={leads.map((l) => ({
               id: l.id,
               name: l.name,
@@ -103,6 +133,7 @@ export default function AdminLeadsPage() {
               property: l.properties,
             }))}
           />
+          </div>
         </div>
 
         <div className="overflow-x-auto">
@@ -129,7 +160,7 @@ export default function AdminLeadsPage() {
                   >
                     <td className="px-5 py-3.5">
                       <p className="font-medium">{l.name}</p>
-                      <p className="text-xs text-muted">{l.mobile}</p>
+                      <a href={`tel:${l.mobile}`} className="text-xs text-accent hover:underline">{l.mobile}</a>
                       <p className="text-xs text-muted truncate max-w-[140px]">{l.email}</p>
                     </td>
                     <td className="px-5 py-3.5">

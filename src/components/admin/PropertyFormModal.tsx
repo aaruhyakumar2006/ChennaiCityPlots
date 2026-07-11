@@ -236,19 +236,23 @@ export default function PropertyFormModal({ property, onClose, onSaved }: Props)
     });
   }
 
-  async function uploadToCloudinary(file: File) {
-    const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
-    const uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
-    if (!cloudName || !uploadPreset) {
-      throw new Error("Set VITE_CLOUDINARY_CLOUD_NAME and VITE_CLOUDINARY_UPLOAD_PRESET in .env");
-    }
-    const fd = new FormData();
-    fd.append("file", file);
-    fd.append("upload_preset", uploadPreset);
-    const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, { method: "POST", body: fd });
-    if (!res.ok) throw new Error("Cloudinary upload failed");
-    const data = await res.json();
-    return { url: data.secure_url as string, publicId: data.public_id as string };
+  async function uploadToSupabase(file: File) {
+    const bucket = "property-images";
+    const timestamp = Date.now();
+    const randomStr = Math.random().toString(36).substring(2, 8);
+    const fileName = `${timestamp}-${randomStr}-${file.name}`;
+    
+    const { data, error } = await supabase.storage
+      .from(bucket)
+      .upload(fileName, file);
+    
+    if (error) throw new Error(`Upload failed: ${error.message}`);
+    
+    const { data: publicUrlData } = supabase.storage
+      .from(bucket)
+      .getPublicUrl(data.path);
+    
+    return { url: publicUrlData.publicUrl, publicId: data.path };
   }
 
   async function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -257,7 +261,7 @@ export default function PropertyFormModal({ property, onClose, onSaved }: Props)
     setUploading(true);
     setError("");
     try {
-      const results = await Promise.all(files.map(uploadToCloudinary));
+      const results = await Promise.all(files.map(uploadToSupabase));
       setUploadedImages((prev) => [...prev, ...results.map((r) => ({ ...r, imageType: uploadType }))]);
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "Image upload failed");

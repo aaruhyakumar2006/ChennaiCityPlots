@@ -3,7 +3,7 @@ interface Props {
 }
 
 const PHONE = "916369678465";
-const GENERIC_MSG = "Hi%2C%20I%27m%20interested%20in%20a%20property%20on%20Madras City Plots%20Homes";
+const GENERIC_MSG = encodeURIComponent("Hi, I'm interested in a property on Madras City Plots. Could you please share more details?");
 
 export default function WhatsAppFab({ propertyName }: Props) {
   const message = propertyName

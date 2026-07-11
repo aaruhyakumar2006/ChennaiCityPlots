@@ -1,6 +1,6 @@
 import { Outlet, Link, useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { Home as HomeIcon, LayoutDashboard, Building2, Users, CalendarDays, LogOut, MessageSquareQuote, HardHat, UserCheck } from "lucide-react";
+import { Home as HomeIcon, LayoutDashboard, Building2, Users, CalendarDays, LogOut, MessageSquareQuote, HardHat, UserCheck, Shield } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
 const NAV = [
@@ -11,12 +11,26 @@ const NAV = [
   { href: "/admin/visits", label: "Site Visits", icon: CalendarDays },
   { href: "/admin/testimonials", label: "Reviews", icon: MessageSquareQuote },
   { href: "/admin/builders", label: "Builders", icon: HardHat },
+  { href: "/admin/access", label: "Admin Access", icon: Shield },
 ];
 
 export default function AdminLayout() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const [newLeads, setNewLeads] = useState(0);
+  const [adminInitials, setAdminInitials] = useState("AD");
+
+  // Derive initials from logged-in user email
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => {
+      const email = data.session?.user?.email ?? "";
+      if (email) {
+        const parts = email.split("@")[0].split(/[._-]/);
+        const initials = parts.slice(0, 2).map((p) => p[0]?.toUpperCase() ?? "").join("");
+        setAdminInitials(initials || "AD");
+      }
+    });
+  }, []);
 
   useEffect(() => {
     const channel = supabase
@@ -28,9 +42,36 @@ export default function AdminLayout() {
     return () => { supabase.removeChannel(channel); };
   }, []);
 
+  // Clear badge when admin navigates to Leads
+  useEffect(() => {
+    if (pathname.startsWith("/admin/leads") && newLeads > 0) {
+      setNewLeads(0);
+    }
+  }, [pathname, newLeads]);
+
   async function logout() {
+    try {
+      const { data } = await supabase.auth.getUser();
+      
+      if (data.user) {
+        // Save admin session data before logout
+        await supabase
+          .from("user_profile")
+          .upsert({
+            id: data.user.id,
+            email: data.user.email || "",
+            last_logout: new Date().toISOString(),
+            updated_at: new Date().toISOString(),
+          } as any, {
+            onConflict: "id"
+          });
+      }
+    } catch (err) {
+      console.error("Failed to save logout data:", err);
+    }
+    
     await supabase.auth.signOut();
-    navigate("/admin/login");
+    navigate("/", { replace: true });
   }
 
   return (
@@ -51,7 +92,6 @@ export default function AdminLayout() {
           {NAV.map((item) => {
             const active = item.href === "/admin" ? pathname === "/admin" : pathname.startsWith(item.href);
             const showBadge = item.badge && newLeads > 0;
-            if (active && item.badge && newLeads > 0) setNewLeads(0);
             return (
               <Link
                 key={item.href}
@@ -103,7 +143,7 @@ export default function AdminLayout() {
               View Site
             </Link>
             <span className="w-9 h-9 rounded-full bg-accent-50 text-accent font-display font-semibold flex items-center justify-center text-sm">
-              SA
+              {adminInitials}
             </span>
           </div>
         </header>

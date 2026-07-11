@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Heart, ArrowRight } from "lucide-react";
+import { Helmet } from "react-helmet-async";
 import { supabase } from "@/lib/supabase";
 import { useWishlist } from "@/lib/useWishlist";
 import PropertyCard from "@/components/PropertyCard";
@@ -31,6 +32,11 @@ export default function SavedPage() {
 
   return (
     <>
+      <Helmet>
+        <title>Saved Properties | Madras City Plots</title>
+        <meta name="description" content="View your saved plots on Madras City Plots. Review and compare your shortlisted properties anytime." />
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
       {/* Page header */}
       <div className="bg-gradient-to-r from-red-50 to-pink-50 border-b border-line">
         <div className="max-w-7xl mx-auto px-5 md:px-8 py-10">

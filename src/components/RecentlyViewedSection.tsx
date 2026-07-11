@@ -22,7 +22,7 @@ export default function RecentlyViewedSection({ excludeId }: Props) {
     setLoading(true);
     supabase
       .from("properties")
-      .select("id, property_id, name, slug, type, status, location, price, area_min, area_max, configuration, description, property_images(url, order)")
+      .select("id, property_id, name, slug, type, status, location, price, area_min, area_max, configuration, description, property_images(url, sort_order)")
       .in("id", filteredIds)
       .then(({ data }) => {
         const rows = (data as PropertyCardData[]) ?? [];

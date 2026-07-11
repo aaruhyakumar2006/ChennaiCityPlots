@@ -142,7 +142,6 @@ export default function PropertyDetailPage() {
     ["Plot Type",      property.type === "RESIDENTIAL" ? "Residential" : "Commercial"],
     ["Approval",       property.approval_status ?? "—"],
     ["DTCP / CMDA No.",property.rera_number ?? "—"],
-    ["Survey No.",     property.dimensions ?? "—"],
     ["Available Units",property.available_units ?? "—"],
     ["Possession",     (property as any).possession_year ? String((property as any).possession_year) : "—"],
   ];
@@ -161,6 +160,47 @@ export default function PropertyDetailPage() {
         <meta property="og:description" content={seoDesc} />
         <meta property="og:url" content={canonical} />
         {ogImage && <meta property="og:image" content={ogImage} />}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={seoTitle} />
+        <meta name="twitter:description" content={seoDesc} />
+        {ogImage && <meta name="twitter:image" content={ogImage} />}
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "RealEstateListing",
+          "name": property.name,
+          "description": seoDesc,
+          "url": canonical,
+          ...(ogImage ? { "image": ogImage } : {}),
+          "offers": {
+            "@type": "Offer",
+            "price": property.price,
+            "priceCurrency": "INR",
+            "availability": property.status === "READY_TO_MOVE"
+              ? "https://schema.org/InStock"
+              : "https://schema.org/PreOrder"
+          },
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": property.location,
+            "addressRegion": "Tamil Nadu",
+            "addressCountry": "IN"
+          },
+          ...(property.latitude && property.longitude ? {
+            "geo": {
+              "@type": "GeoCoordinates",
+              "latitude": property.latitude,
+              "longitude": property.longitude
+            }
+          } : {}),
+          "breadcrumb": {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "Home", "item": import.meta.env.VITE_SITE_URL ?? "https://www.madrascityplots.com" },
+              { "@type": "ListItem", "position": 2, "name": "Properties", "item": `${import.meta.env.VITE_SITE_URL ?? "https://www.madrascityplots.com"}/properties` },
+              { "@type": "ListItem", "position": 3, "name": property.name, "item": canonical }
+            ]
+          }
+        })}</script>
       </Helmet>
       <section className="max-w-7xl mx-auto px-5 md:px-8 pt-8 print:hidden">
         <p className="text-sm text-muted mb-5">

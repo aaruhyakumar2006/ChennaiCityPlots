@@ -80,7 +80,7 @@ export default function QuickEnquireModal({ propertyId, propertyName, onClose }:
           ) : (
             <form onSubmit={handleSubmit} className="space-y-3">
               <FloatInput name="name"   label="Full Name"      icon={User}  required />
-              <FloatInput name="mobile" label="Mobile Number"  icon={Phone} required type="tel" pattern="[0-9]{10}" />
+              <FloatInput name="mobile" label="Mobile Number"  icon={Phone} required type="tel" pattern="[6-9][0-9]{9}" />
               <FloatInput name="email"  label="Email Address"  icon={Mail}  required type="email" />
               {error && <p className="text-xs text-red-600 bg-red-50 border border-red-200 rounded-xl px-3 py-2">{error}</p>}
               <button type="submit" disabled={status === "loading"}

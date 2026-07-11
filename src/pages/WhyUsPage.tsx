@@ -1,5 +1,8 @@
 import { ShieldCheck, FileText, Scale, CalendarCheck, Building2, Headphones, CheckCircle2, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
+
+const SITE_URL = import.meta.env.VITE_SITE_URL ?? "https://www.madrascityplots.com";
 
 const WHY_US = [
   {
@@ -58,6 +61,19 @@ const STATS = [
 export default function WhyUsPage() {
   return (
     <>
+      <Helmet>
+        <title>Why Choose Madras City Plots | Trusted Plot Brokers in Chennai</title>
+        <meta name="description" content="Discover why 500+ families trust Madras City Plots. DTCP & CMDA verified plots, transparent pricing, legal assistance, and end-to-end support across 15+ Chennai localities." />
+        <meta name="keywords" content="trusted plot brokers Chennai, DTCP approved plots Chennai, CMDA verified plots, buy plots Chennai, real estate broker Chennai" />
+        <link rel="canonical" href={`${SITE_URL}/why-us`} />
+        <meta property="og:title" content="Why Choose Madras City Plots | Trusted Plot Brokers in Chennai" />
+        <meta property="og:description" content="500+ families trust us. DTCP & CMDA verified plots, transparent pricing, and end-to-end legal support across Chennai." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={`${SITE_URL}/why-us`} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Why Choose Madras City Plots | Trusted Plot Brokers in Chennai" />
+        <meta name="twitter:description" content="500+ families trust us. DTCP & CMDA verified plots, transparent pricing, and end-to-end legal support across Chennai." />
+      </Helmet>
       {/* Hero */}
       <section className="relative overflow-hidden aurora-bg text-white py-24 px-5 md:px-8">
         <div className="orb w-96 h-96 top-[-8rem] right-[-8rem]"

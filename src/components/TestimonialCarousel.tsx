@@ -32,7 +32,7 @@ const FALLBACK: Testimonial[] = [
     id: "3",
     name: "Suresh Kumar",
     role: "Invested in a commercial plot, Guindy",
-    quote: "Chennai City Plots was the only broker with DTCP and CMDA verified listings. That trust made all the difference.",
+    quote: "Madras City Plots was the only broker with DTCP and CMDA verified listings. That trust made all the difference.",
     rating: 5,
     avatar_url: null,
   },

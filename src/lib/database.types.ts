@@ -172,6 +172,21 @@ export interface Database {
         Insert: Omit<Database["public"]["Tables"]["testimonials"]["Row"], "id" | "created_at">;
         Update: Partial<Database["public"]["Tables"]["testimonials"]["Insert"]>;
       };
+      user_wishlist: {
+        Row: {
+          id: string;
+          user_id: string;
+          property_id: string;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          user_id: string;
+          property_id: string;
+          created_at?: string;
+        };
+        Update: never;
+      };
       Views: Record<string, never>;
       Functions: Record<string, never>;
     };
